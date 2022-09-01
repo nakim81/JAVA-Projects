@@ -5,7 +5,11 @@ import java.util.Observable;
 
 
 /** The state of a game of 2048.
+<<<<<<< HEAD
  *  @author TODO: Noah Kim
+=======
+ *  @author TODO: YOUR NAME HERE
+>>>>>>> 9620606b8185df5f90f757ee788b25a3b4f6ee85
  */
 public class Model extends Observable {
     /** Current contents of the board. */
@@ -117,6 +121,7 @@ public class Model extends Observable {
      */
     public void tilt(Side side) {
         // TODO: Fill in this function.
+<<<<<<< HEAD
         for (int c = 0; c < _board.size(); c++) {
             for (int r = 0; r < _board.size(); r++) {
                 Tile t = _board.tile(c, r);
@@ -137,6 +142,11 @@ public class Model extends Observable {
             }
       }
 
+=======
+
+        checkGameOver();
+    }
+>>>>>>> 9620606b8185df5f90f757ee788b25a3b4f6ee85
 
     /** Checks if the game is over and sets the gameOver variable
      *  appropriately.
@@ -155,6 +165,7 @@ public class Model extends Observable {
      */
     public static boolean emptySpaceExists(Board b) {
         // TODO: Fill in this function.
+<<<<<<< HEAD
         for (int c = 0; c < b.size(); c++){
             for (int r = 0; r < b.size(); r++) {
                 if (b.tile(c, r) == null) {
@@ -162,6 +173,8 @@ public class Model extends Observable {
                 }
             }
         }
+=======
+>>>>>>> 9620606b8185df5f90f757ee788b25a3b4f6ee85
         return false;
     }
 
@@ -172,6 +185,7 @@ public class Model extends Observable {
      */
     public static boolean maxTileExists(Board b) {
         // TODO: Fill in this function.
+<<<<<<< HEAD
         for (int c = 0; c < b.size(); c++){
             for (int r = 0; r < b.size(); r++) {
                 if (b.tile(c, r) != null && b.tile(c, r).value() == MAX_PIECE) {
@@ -179,6 +193,8 @@ public class Model extends Observable {
                 }
             }
         }
+=======
+>>>>>>> 9620606b8185df5f90f757ee788b25a3b4f6ee85
         return false;
     }
 
@@ -190,6 +206,7 @@ public class Model extends Observable {
      */
     public static boolean atLeastOneMoveExists(Board b) {
         // TODO: Fill in this function.
+<<<<<<< HEAD
         int[] verticalMove = {0, -1, 0, 1};
         int[] horizontalMove = {-1, 0, 1, 0};
         for (int c = 0; c < b.size(); c++){
@@ -205,6 +222,8 @@ public class Model extends Observable {
                 }
             }
         }
+=======
+>>>>>>> 9620606b8185df5f90f757ee788b25a3b4f6ee85
         return false;
     }
 
