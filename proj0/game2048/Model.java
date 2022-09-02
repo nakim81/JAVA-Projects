@@ -117,26 +117,49 @@ public class Model extends Observable {
      */
     public void tilt(Side side) {
         // TODO: Fill in this function.
+        _board.setViewingPerspective(side);
         for (int c = 0; c < _board.size(); c++) {
-            for (int r = 0; r < _board.size(); r++) {
+            for (int r = _board.size() - 1; r >= 0; r--) {
                 Tile t = _board.tile(c, r);
-                moveIfPossible(4, c, t);
-            }
-        }
-
-        checkGameOver();
-    }
-    /** When there is a tile on the moving direction, merge them if their values are the same, don't merge otherwise.*/
-     public void moveIfPossible(int i, int c, Tile t) {
-            if (i > 0) {
-                if (_board.tile(c, i) == null || (_board.tile(c, i) != null && _board.tile(c, i).value() == t.value())) {
-                    _board.move(c, i, t);
-                } else if (_board.tile(c, i) != null && _board.tile(c, i).value() != t.value()) {
-                   moveIfPossible(i - 1, c, t);
+                if (t != null) {
+                    int nullRow = 3;
+                    while (nullRow >= r) {
+                        if (_board.tile(c, nullRow) == null) {
+                            if (nullRow >= r) {
+                                _board.move(c, nullRow, t);
+                                break;
+                            }
+                        }
+                        nullRow--;
+                    }
                 }
             }
+            for (int r2 = _board.size() - 1; r2 >= 0; r2--) {
+                Tile t2 = _board.tile(c, r2);
+                int nextRow = r2 - 1;
+                Tile nextTile = _board.tile(c, nextRow);
+                if (t2 == null || nextTile == null) {
+                    break;
+                }
+                if (nextTile.value() == t2.value()) {
+                    _board.move(c, r2, nextTile);
+                    _score += t2.value() * 2;
+                    for (int i = nextRow - 1; i >= 0; i-- ) {
+                        if (_board.tile(c, i) == null) {
+                            break;
+                        }
+                        if (i < _board.size()) {
+                            _board.move(c, i + 1, _board.tile(c, i));
+                        }
+                    }
+                }
+            }
+        }
+        _board.setViewingPerspective(Side.NORTH);
         checkGameOver();
     }
+
+
 
     /** Checks if the game is over and sets the gameOver variable
      *  appropriately.
