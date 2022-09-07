@@ -27,19 +27,19 @@ public class TimeAList {
         AList<Integer> Ns = new AList<Integer>();
         AList<Double> times = new AList<Double>();
         AList<Integer> opCounts = new AList<Integer>();
-        for (int i = 1000; i <= 128000; i = i *= 2) {
+        for (int N = 1000; N <= 128000; N = N *= 2) {
             AList<Integer> emptyList = new AList<Integer>(); //an empty lst has been generated.
             Stopwatch sw = new Stopwatch(); //sw.start() recorded.
-            int j = 0;
-            while (j <= i) {
-                emptyList.addLast(j);
+            int i = 0;
+            while (i <= N) {
+                emptyList.addLast(i);
                 double timeInSeconds = sw.elapsedTime();
-                if (j == i) {
-                    Ns.addLast(j);
-                    opCounts.addLast(j);
+                if (i == N) {
+                    Ns.addLast(i);
+                    opCounts.addLast(i);
                     times.addLast(timeInSeconds);
                 }
-                j ++;
+                i ++;
             }
         }
         printTimingTable(Ns, times, opCounts);
