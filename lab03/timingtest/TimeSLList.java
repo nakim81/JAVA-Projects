@@ -32,16 +32,18 @@ public class TimeSLList {
                 emptyList.addFirst(count);
             }
             int i = 0;
-            int limit = 0;
+            int limit = 10000;
             Ns.addLast(N);
             opCounts.addLast(limit);
             Stopwatch sw = new Stopwatch();
             while (i <= limit) {
                 emptyList.getLast();
+                i ++;
             }
             double timeInSeconds = sw.elapsedTime();
             times.addLast(timeInSeconds);
         }
+        printTimingTable(Ns, times, opCounts);
     }
 
 }
