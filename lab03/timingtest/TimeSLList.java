@@ -29,18 +29,18 @@ public class TimeSLList {
         for (int N = 1000; N <= 128000; N = N *= 2) {
             SLList<Integer> emptyList = new SLList<Integer>(); //an empty lst has been generated.
             for (int count = 0; count <= N; count ++) {
-                emptyList.addLast(count);
+                emptyList.addFirst(count);
             }
+            int i = 0;
+            int limit = 0;
+            Ns.addLast(N);
+            opCounts.addLast(limit);
             Stopwatch sw = new Stopwatch();
-            for (int i = 0; i <= 10000; i ++) {
+            while (i <= limit) {
                 emptyList.getLast();
-                double timeInSeconds = sw.elapsedTime();
-                if (i == 10000) {
-                    times.addLast(timeInSeconds);
-                    Ns.addLast(N);
-                    opCounts.addLast(10000);
-                }
             }
+            double timeInSeconds = sw.elapsedTime();
+            times.addLast(timeInSeconds);
         }
     }
 
