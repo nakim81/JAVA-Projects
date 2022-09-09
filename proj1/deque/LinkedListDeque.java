@@ -81,9 +81,8 @@ public class LinkedListDeque<T> {
             return null;
         }
         Node m = sentinel.next;
-        while (index > 0) {
+        for (int i = 0; i < index; i++) {
             m = m.next;
-            index--;
         }
         return m.item;
     }
@@ -96,7 +95,7 @@ public class LinkedListDeque<T> {
         return helper(index, m);
     }
 
-    public T helper(int index, Node n) {
+    private T helper(int index, Node n) {
         if (index == 0) {
             return n.item;
         } else {
@@ -107,10 +106,19 @@ public class LinkedListDeque<T> {
     }
 
     public boolean equals(Object o) {
+        int index = this.size();
+        boolean check = false;
         if (o instanceof LinkedListDeque<?>) {
-            return true;
+            for (int i = 0; i < index; i++) {
+                if (this.get(i) == ((LinkedListDeque<?>) o).get(i)) {
+                    check = true;
+                } else {
+                    check = false;
+                }
+            }
         } else {
             return false;
         }
+        return check;
     }
 }
