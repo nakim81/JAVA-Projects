@@ -2,15 +2,7 @@
  *  @author YOUR NAME HERE
  */
 public class Collatz {
-
-//    /** Returns the nextNumber in a Collatz sequence. */
-//    public static int nextNumber(int n) {
-//        /** if n is even, return a number n divided by 2 */
-//        if (n % 2 == 0) {
-//            return (n / 2);
-//        /** if n is odd, return a number n times 3 plus 1 */
-//        } else {
-//            return (n*3 + 1);
+    
     /** Buggy implementation of nextNumber! */
     public static int nextNumber(int n) {
         if (n  == 128) {
