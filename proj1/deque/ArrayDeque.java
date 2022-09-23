@@ -8,10 +8,11 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
     private int nextFirst;
     private int nextLast;
     private T[] items;
-    private static final int magicNumber = 8;
+    private static final int MAGICNUMBER = 8;
+    private static final int MAGICNUMBER2 = 16;
 
     public ArrayDeque() {
-        items = (T[]) new Object[magicNumber];
+        items = (T[]) new Object[MAGICNUMBER];
         nextFirst = 0;
         nextLast = 1;
         size = 0;
@@ -25,8 +26,8 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         T[] a = (T[]) new Object[capacity];
         System.arraycopy(items, 0, a, 0, size);
         items = a;
-        nextFirst = items.length - 1;
-        nextLast = size;
+        this.nextFirst = items.length - 1;
+        this.nextLast = size;
     }
     @Override
     public void addFirst(T item) {
@@ -89,8 +90,8 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
             return null;
         }
         T removedItem;
-        if ((size - 1) / items.length <= 0.25 && size >= magicNumber * 2) {
-            resize(size / 2);
+        if ((size - 1) / items.length <= 0.25 && size >= MAGICNUMBER2) {
+            resize(size * 2);
         }
         nextFirst = changeNextLast(nextFirst);
         removedItem = items[nextFirst];
@@ -104,8 +105,8 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
             return null;
         }
         T removedItem;
-        if ((size - 1) / items.length <= 0.25 && size >= magicNumber * 2) {
-            resize(size / 2);
+        if ((size - 1) / items.length <= 0.25 && size >= MAGICNUMBER2) {
+            resize(size * 2);
         }
         nextLast = changeNextFirst(nextLast);
         removedItem = items[nextLast];
