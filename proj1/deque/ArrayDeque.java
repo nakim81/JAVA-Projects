@@ -1,6 +1,5 @@
 package deque;
 
-import edu.princeton.cs.algs4.StdOut;
 import java.util.Iterator;
 
 public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
@@ -9,7 +8,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
     private int nextFirst;
     private int nextLast;
     private T[] items;
-    public static int magicNumber = 8;
+    private static final int magicNumber = 8;
 
     public ArrayDeque() {
         items = (T[]) new Object[magicNumber];
@@ -22,7 +21,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         return size;
     }
 
-    public void resize(int capacity) {
+    private void resize(int capacity) {
         T[] a = (T[]) new Object[capacity];
         System.arraycopy(items, 0, a, 0, size);
         items = a;
@@ -41,7 +40,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
             size++;
         }
     }
-    public int changeNextFirst(int nextFirstTracker) {
+    private int changeNextFirst(int nextFirstTracker) {
         if (nextFirstTracker == 0) {
             return items.length - 1;
         } else {
@@ -62,12 +61,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         }
     }
 
-    @Override
-    public boolean isEmpty() {
-        return Deque.super.isEmpty();
-    }
-
-    public int changeNextLast(int nextLastTracker) {
+    private int changeNextLast(int nextLastTracker) {
         if (nextLastTracker == items.length - 1) {
             return 0;
         } else {
@@ -119,26 +113,52 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         size--;
         return removedItem;
     }
-    @Override
-    public boolean equals(Object o) {
-        boolean check = false;
-        if (o instanceof Deque) {
-            for (int i = 0; i < this.size(); i++) {
-                if (this.get(i) == ((Deque<?>) o).get(i)) {
-                    check = true;
-                } else {
-                    check = false;
-                    break;
-                }
-            }
-        } else {
-            return false;
-        }
-        return check;
-    }
 
     @Override
     public Iterator<T> iterator() {
-        return null;
+        return new ArrayDequeIterator();
+    }
+
+    public boolean equals(Object o) {
+        if (o instanceof ArrayDeque oas) {
+            if (oas.size != this.size) {
+                return false;
+            }
+            for (T x : this) {
+                if (!oas.contains(x)) {
+                    return false;
+                }
+            }
+            return true;
+        }
+        return false;
+    }
+    private boolean contains(T x) {
+        for (int i = 0; i < size; i += 1) {
+            if (items[i].equals(x)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private class ArrayDequeIterator implements Iterator<T> {
+        private int wizPos;
+
+        public ArrayDequeIterator() {
+            wizPos = 0;
+        }
+
+        public boolean hasNext() {
+            return wizPos < size;
+        }
+
+        public T next() {
+            T returnItem = items[wizPos];
+            wizPos += 1;
+            return returnItem;
+        }
     }
 }
+
+

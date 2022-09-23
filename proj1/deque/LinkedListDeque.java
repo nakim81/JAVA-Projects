@@ -1,12 +1,14 @@
 package deque;
 
+import java.util.ArrayDeque;
 import java.util.Iterator;
+import java.util.function.Consumer;
 
 public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
 
     @Override
     public Iterator<T> iterator() {
-        return null;
+        return new LinkedListDequeIter();
     }
 
     private class Node {
@@ -43,11 +45,6 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
         last.next = newNode;
         sentinel.prev = newNode;
         size++;
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return Deque.super.isEmpty();
     }
 
     @Override
@@ -116,19 +113,63 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
     }
     @Override
     public boolean equals(Object o) {
-        boolean check = false;
         if (o instanceof Deque) {
-            for (int i = 0; i < this.size(); i++) {
-                if (this.get(i) == ((Deque<?>) o).get(i)) {
-                    check = true;
-                } else {
-                    check = false;
-                    break;
+            Deque<T> newDeque = (Deque) o;
+            if (newDeque.size() != this.size) {
+                return false;
+            }
+            for (int i = 0; i < this.size; i++) {
+                if (this.get(i) != ((Deque<?>) o).get(i)) {
+                    return false;
                 }
             }
+            return true;
         } else {
             return false;
         }
+    }
+    private boolean contains(T x) {
+        boolean check = true;
+        Node m = sentinel.next;
+        for (int i = 0; i < size; i += 1) {
+            if (m.item.equals(x)) {
+                check = true;
+            } else {
+                check = false;
+            }
+            m = m.next;
+        }
         return check;
+    }
+
+    private class LinkedListDequeIter implements Iterator<T> {
+        private int wizPos;
+
+        public LinkedListDequeIter() {
+            wizPos = 0;
+        }
+
+        public boolean hasNext() {
+            return wizPos < size;
+        }
+
+        @Override
+        public T next() {
+            Node m = sentinel.next;
+            for (int i = 0; i <= wizPos; i++) {
+                m = m.next;
+            }
+            return m.item;
+        }
+
+        @Override
+        public void remove() {
+            Iterator.super.remove();
+        }
+
+        @Override
+        public void forEachRemaining(Consumer<? super T> action) {
+            Iterator.super.forEachRemaining(action);
+        }
     }
 }

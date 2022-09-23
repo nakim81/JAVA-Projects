@@ -49,12 +49,12 @@ public class ArrayDequeTest {
 
     @Test
     public void equalsTest() {
-        LinkedListDeque<Integer> lld = new LinkedListDeque<Integer>();
         ArrayDeque<Integer> ad = new ArrayDeque<Integer>();
+        ArrayDeque<Integer> ad2 = new ArrayDeque<Integer>();
         for (int i = 0; i <= 5; i ++) {
-            lld.addLast(i);
             ad.addLast(i);
+            ad2.addLast(i);
         }
-        assertTrue(ad.equals(lld));
+        assertTrue(ad.equals(ad2));
     }
 }
