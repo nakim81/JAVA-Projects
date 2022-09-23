@@ -2,7 +2,7 @@ package deque;
 
 import edu.princeton.cs.algs4.StdOut;
 
-public class ArrayDeque<T> {
+public class ArrayDeque<T> implements Deque<T> {
 
     private int size;
     private int nextFirst;
@@ -15,14 +15,7 @@ public class ArrayDeque<T> {
         nextLast = 1;
         size = 0;
     }
-
-    public boolean isEmpty() {
-        if (size == 0) {
-            return true;
-        }
-        return false;
-    }
-
+    @Override
     public int size() {
         return size;
     }
@@ -34,7 +27,7 @@ public class ArrayDeque<T> {
         nextFirst = items.length - 1;
         nextLast = size;
     }
-
+    @Override
     public void addFirst(T item) {
         if (size < items.length) {
             items[nextFirst] = item;
@@ -54,7 +47,7 @@ public class ArrayDeque<T> {
             return nextFirstTracker;
         }
     }
-
+    @Override
     public void addLast(T item) {
         if (size < items.length) {
             items[nextLast] = item;
@@ -75,21 +68,21 @@ public class ArrayDeque<T> {
             return nextLastTracker;
         }
     }
-
+    @Override
     public void printDeque() {
         for (int i = 0; i < size; i ++) {
             System.out.print(items[i] + " ");
         }
         System.out.println("\n");
     }
-
+    @Override
     public T get(int index) {
         if (index < 0 || index > items.length - 1 || items[index] == null) {
             return null;
         }
         return items[index + 1];
     }
-
+    @Override
     public T removeFirst() {
         if (size == 0) {
             return null;
@@ -104,7 +97,7 @@ public class ArrayDeque<T> {
         size --;
         return removedItem;
     }
-
+    @Override
     public T removeLast() {
         if (size == 0) {
             return null;
@@ -119,12 +112,12 @@ public class ArrayDeque<T> {
         size --;
         return removedItem;
     }
-
+    @Override
     public boolean equals(Object o) {
         boolean check = false;
-        if (o instanceof ArrayDeque<?>) {
+        if (o instanceof Deque) {
             for (int i = 0; i < this.size(); i++) {
-                if (this.get(i) == ((ArrayDeque<?>) o).get(i)) {
+                if (this.get(i) == ((Deque<?>) o).get(i)) {
                     check = true;
                 } else {
                     check = false;

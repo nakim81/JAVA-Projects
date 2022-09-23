@@ -1,6 +1,8 @@
 package deque;
 
-public class LinkedListDeque<T> {
+import java.util.Iterator;
+
+public class LinkedListDeque<T> implements Deque<T> {
 
     private class Node {
         private T item;
@@ -22,13 +24,14 @@ public class LinkedListDeque<T> {
         sentinel.next = sentinel;
         size = 0;
     }
+    @Override
     public void addFirst(T item) {
         Node newNode = new Node(sentinel, item, sentinel.next);
         sentinel.next.prev = newNode;
         sentinel.next = newNode;
         size++;
     }
-
+    @Override
     public void addLast(T item) {
         Node last = sentinel.prev;
         Node newNode = new Node(last, item, sentinel);
@@ -36,15 +39,11 @@ public class LinkedListDeque<T> {
         sentinel.prev = newNode;
         size++;
     }
-
-    public boolean isEmpty() {
-        return size == 0;
-    }
-
+    @Override
     public int size() {
         return size;
     }
-
+    @Override
     public void printDeque() {
         Node m = sentinel.next;
         while (m != sentinel) {
@@ -53,7 +52,7 @@ public class LinkedListDeque<T> {
         }
         System.out.print("\n");
     }
-
+    @Override
     public T removeFirst() {
         if (isEmpty()) {
             return null;
@@ -64,7 +63,7 @@ public class LinkedListDeque<T> {
         size--;
         return deletedNode.item;
     }
-
+    @Override
     public T removeLast() {
         if (isEmpty()) {
             return null;
@@ -75,7 +74,7 @@ public class LinkedListDeque<T> {
         size--;
         return deletedNode.item;
     }
-
+    @Override
     public T get(int index) {
         if (isEmpty() || index > size - 1 || index < 0) {
             return null;
@@ -104,12 +103,12 @@ public class LinkedListDeque<T> {
             return helper(index, n);
         }
     }
-
+    @Override
     public boolean equals(Object o) {
         boolean check = false;
-        if (o instanceof LinkedListDeque<?>) {
+        if (o instanceof Deque) {
             for (int i = 0; i < this.size(); i++) {
-                if (this.get(i) == ((LinkedListDeque<?>) o).get(i)) {
+                if (this.get(i) == ((Deque<?>) o).get(i)) {
                     check = true;
                 } else {
                     check = false;
