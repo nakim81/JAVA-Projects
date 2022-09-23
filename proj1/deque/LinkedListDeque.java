@@ -77,7 +77,7 @@ public class LinkedListDeque<T> {
     }
 
     public T get(int index) {
-        if (isEmpty() | index > size - 1) {
+        if (isEmpty() || index > size - 1 || index < 0) {
             return null;
         }
         Node m = sentinel.next;
@@ -106,14 +106,14 @@ public class LinkedListDeque<T> {
     }
 
     public boolean equals(Object o) {
-        int index = this.size();
         boolean check = false;
         if (o instanceof LinkedListDeque<?>) {
-            for (int i = 0; i < index; i++) {
+            for (int i = 0; i < this.size(); i++) {
                 if (this.get(i) == ((LinkedListDeque<?>) o).get(i)) {
                     check = true;
                 } else {
                     check = false;
+                    break;
                 }
             }
         } else {
