@@ -5,15 +5,12 @@ import java.util.function.Consumer;
 
 public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
 
-    @Override
-    public Iterator<T> iterator() {
-        return new LinkedListDequeIter();
-    }
 
     private class Node {
         private T item;
         private Node next;
         private Node prev;
+
         private Node(Node p, T i, Node n) {
             prev = p;
             item = i;
@@ -30,6 +27,7 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
         sentinel.next = sentinel;
         size = 0;
     }
+
     @Override
     public void addFirst(T item) {
         Node newNode = new Node(sentinel, item, sentinel.next);
@@ -37,6 +35,7 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
         sentinel.next = newNode;
         size++;
     }
+
     @Override
     public void addLast(T item) {
         Node last = sentinel.prev;
@@ -50,6 +49,7 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
     public int size() {
         return size;
     }
+
     @Override
     public void printDeque() {
         Node m = sentinel.next;
@@ -59,6 +59,7 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
         }
         System.out.print("\n");
     }
+
     @Override
     public T removeFirst() {
         if (isEmpty()) {
@@ -70,6 +71,7 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
         size--;
         return deletedNode.item;
     }
+
     @Override
     public T removeLast() {
         if (isEmpty()) {
@@ -81,6 +83,7 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
         size--;
         return deletedNode.item;
     }
+
     @Override
     public T get(int index) {
         if (isEmpty() || index > size - 1 || index < 0) {
@@ -110,6 +113,7 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
             return helper(index, n);
         }
     }
+
     @Override
     public boolean equals(Object o) {
         if (o instanceof Deque n) {
@@ -127,6 +131,11 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
         }
     }
 
+    @Override
+    public Iterator<T> iterator() {
+        return new LinkedListDequeIter();
+    }
+
     private class LinkedListDequeIter implements Iterator<T> {
         private int wizPos;
 
@@ -141,20 +150,11 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
         @Override
         public T next() {
             Node m = sentinel.next;
-            for (int i = 0; i <= wizPos; i++) {
+            for (int i = 0; i < wizPos; i++) {
                 m = m.next;
             }
+            wizPos++;
             return m.item;
-        }
-
-        @Override
-        public void remove() {
-            Iterator.super.remove();
-        }
-
-        @Override
-        public void forEachRemaining(Consumer<? super T> action) {
-            Iterator.super.forEachRemaining(action);
         }
     }
 }
