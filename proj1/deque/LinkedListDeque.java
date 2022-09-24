@@ -1,7 +1,6 @@
 package deque;
 
 import java.util.Iterator;
-import java.util.function.Consumer;
 
 public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
 
@@ -116,12 +115,12 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
 
     @Override
     public boolean equals(Object o) {
-        if (o instanceof LinkedListDeque n) {
+        if (o instanceof Deque n) {
             if (n.size() != this.size()) {
                 return false;
             }
             for (int i = 0; i < this.size; i++) {
-                if (this.get(i) != n.get(i)) {
+                if (this.get(i).equals(n.get(i))) {
                     return false;
                 }
             }
