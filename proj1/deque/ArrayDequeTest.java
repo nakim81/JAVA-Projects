@@ -170,14 +170,32 @@ public class ArrayDequeTest {
         ad.removeFirst();
 //        assertEquals(0, (int) ad.removeLast());
     }
-//    @Test
-//    public void equalsTest() {
-//        ArrayDeque<Integer> ad = new ArrayDeque<Integer>();
-//        ArrayDeque<Integer> ad2 = new ArrayDeque<Integer>();
-//        for (int i = 0; i <= 5; i ++) {
-//            ad.addLast(i);
-//            ad2.addLast(i);
-//        }
-//        assertTrue(ad.equals(ad2));
-//    }
+
+
+    @Test
+    public void removeLastTest3() {
+        ArrayDeque<Integer> ad = new ArrayDeque<Integer>();
+        ad.addLast(0);
+        ad.addFirst(1);
+        ad.addFirst(2);
+        ad.get(2);
+        ad.addFirst(4);
+        ad.addLast(5);
+        ad.addLast(6);
+        ad.removeFirst();
+        ad.removeFirst();
+        ad.addLast(9);
+        ad.addLast(10);
+        ad.removeLast();
+        ad.addFirst(12);
+        ad.addFirst(13);
+        ad.removeLast();
+        ad.addFirst(15);
+        ad.removeFirst();
+        ad.addLast(17);
+        ad.addLast(18);
+        ad.addLast(19);
+        ad.removeFirst();
+        ad.removeLast();
+    }
 }
