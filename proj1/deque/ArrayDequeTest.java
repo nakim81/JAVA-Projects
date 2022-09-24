@@ -126,6 +126,21 @@ public class ArrayDequeTest {
         assertEquals(0, (int) ad.get(2));
         assertEquals(null, ad.get(4));
     }
+    @Test
+    public void removeLastTest2() {
+        ArrayDeque<Integer> ad = new ArrayDeque<Integer>();
+        ad.addFirst(0);
+        ad.addFirst(1);
+        ad.addFirst(2);
+        ad.addFirst(3);
+        ad.addFirst(4);
+        ad.addFirst(5);
+        ad.addFirst(6);
+        ad.addFirst(7);
+        ad.addFirst(8);
+        assertEquals(0, (int) ad.removeLast());
+    }
+
 //    @Test
 //    public void equalsTest() {
 //        ArrayDeque<Integer> ad = new ArrayDeque<Integer>();
