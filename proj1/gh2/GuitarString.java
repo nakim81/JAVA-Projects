@@ -18,10 +18,6 @@ public class GuitarString {
 
     /* Create a guitar string of the given frequency.  */
     public GuitarString(double frequency) {
-        // TODO: Create a buffer with capacity = SR / frequency. You'll need to
-        //       cast the result of this division operation into an int. For
-        //       better accuracy, use the Math.round() function before casting.
-        //       Your should initially fill your buffer array with zeros.
         buffer = new ArrayDeque<Double>();
         int capacity = (int) Math.round(SR / frequency);
         for (int i = 0; i < capacity; i++) {
@@ -32,14 +28,6 @@ public class GuitarString {
 
     /* Pluck the guitar string by replacing the buffer with white noise. */
     public void pluck() {
-        // TODO: Dequeue everything in buffer, and replace with random numbers
-        //       between -0.5 and 0.5. You can get such a number by using:
-        //       double r = Math.random() - 0.5;
-        //
-        //       Make sure that your random numbers are different from each
-        //       other. This does not mean that you need to check that the numbers
-        //       are different from each other. It means you should repeatedly call
-        //       Math.random() - 0.5 to generate new random numbers for each array index.
         for (int i = 0; i < buffer.size(); i++) {
             double r = Math.random() - 0.5;
             buffer.removeFirst();
@@ -51,9 +39,6 @@ public class GuitarString {
      * the Karplus-Strong algorithm.
      */
     public void tic() {
-        // TODO: Dequeue the front sample and enqueue a new sample that is
-        //       the average of the two multiplied by the DECAY factor.
-        //       **Do not call StdAudio.play().**
         double first = buffer.removeFirst();
         double newDouble = (first + buffer.get(0)) / 2;
         buffer.addLast(newDouble);
@@ -61,7 +46,6 @@ public class GuitarString {
 
     /* Return the double at the front of the buffer. */
     public double sample() {
-        // TODO: Return the correct thing.
         return buffer.get(0);
     }
 }
