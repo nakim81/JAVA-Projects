@@ -22,20 +22,21 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         return size;
     }
 
-    private void resize(int capacity, int start) {
+    private void resize(int capacity) {
         T[] a = (T[]) new Object[capacity];
-        System.arraycopy(items, 0, a, start, this.size());
+        System.arraycopy(items, 0, a, 0, this.size());
         items = a;
-        this.nextLast = (nextLast + this.size()) % items.length;
+        this.nextFirst = items.length - 1;
+        this.nextLast = size;
     }
     @Override
     public void addFirst(T item) {
-        if (size <= items.length) {
+        if (size < items.length) {
             items[nextFirst] = item;
             size++;
             nextFirst = changeNextFirst(nextFirst);
         } else {
-            resize(size * 2, nextFirst);
+            resize(size * 2);
             nextFirst = changeNextFirst(nextFirst);
             nextLast = changeNextLast(nextLast);
             items[nextFirst] = item;
@@ -52,15 +53,18 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
     }
     @Override
     public void addLast(T item) {
-        if (size <= items.length) {
+        if (size < items.length) {
             items[nextLast] = item;
             this.size++;
-            nextLast = changeNextLast(nextLast);
+            if (size == items.length) {
+                ;
+            } else {
+                nextLast = changeNextLast(nextLast);
+            }
         } else {
-            resize(this.size() * 2, nextFirst);
-            nextLast = changeNextLast(nextLast);
+            resize(this.size() * 2);
             items[nextLast] = item;
-            nextFirst = changeNextFirst(nextFirst);
+            nextLast = changeNextLast(nextLast);
             size++;
         }
     }
@@ -100,7 +104,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
             size--;
             return ((T) removedItem);
         } else {
-            resize((this.size() / 2), nextFirst);
+            resize((this.size() / 2));
             removedItem = items[nextFirst];
             items[nextFirst] = null;
             nextLast = changeNextLast(nextLast);
@@ -122,7 +126,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
             size--;
             return ((T) removedItem);
         } else {
-            resize((this.size() / 2), nextFirst);
+            resize((this.size() / 2));
             removedItem = items[nextLast];
             items[nextLast] = null;
             nextFirst = changeNextFirst(nextFirst);

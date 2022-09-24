@@ -39,13 +39,34 @@ public class ArrayDequeTest {
     @Test
     public void getTest() {
         ArrayDeque<Integer> ad = new ArrayDeque<Integer>();
+        ArrayDeque<Integer> ad2 = new ArrayDeque<Integer>();
         for (int i = 0; i <= 9; i ++) {
             ad.addLast(i);
         }
-        assertEquals(1, (int) ad.get(1));
-        assertEquals(2, (int) ad.get(2));
-        assertEquals(4, (int) ad.get(4));
+        for (int i = 0; i <= 16; i ++) {
+            ad2.addLast(i);
+        }
+        assertEquals(7, (int) ad.get(0));
+        assertEquals(0, (int) ad.get(1));
+        assertEquals(1, (int) ad.get(2));
+        assertEquals(3, (int) ad.get(4));
+        assertEquals(8, (int) ad.get(8));
         assertEquals(9, (int) ad.get(9));
+
+        assertEquals(16, (int) ad2.get(16));
+    }
+
+    public void getTest2() {
+        ArrayDeque<Integer> ad = new ArrayDeque<Integer>();
+        ArrayDeque<Integer> ad2 = new ArrayDeque<Integer>();
+        for (int i = 0; i <= 16; i ++) {
+            ad2.addFirst(i);
+        }
+        assertEquals(0, (int) ad2.get(0));
+        assertEquals(7, (int) ad2.get(1));
+        assertEquals(6, (int) ad2.get(2));
+        assertEquals(8, (int) ad2.get(15));
+        assertEquals(15, (int) ad2.get(8));
     }
 
 //    @Test
