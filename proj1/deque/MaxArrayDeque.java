@@ -1,9 +1,8 @@
 package deque;
 
 import java.util.Comparator;
-import java.util.Iterator;
 
-public abstract class MaxArrayDeque<T extends ArrayDeque> implements Deque<T>, Iterable<T> {
+public abstract class MaxArrayDeque<T> extends ArrayDeque {
     private Comparator<T> comparator;
 
     public MaxArrayDeque(Comparator<T> c) {
@@ -37,5 +36,13 @@ public abstract class MaxArrayDeque<T extends ArrayDeque> implements Deque<T>, I
             }
         }
         return max;
+    }
+
+    public int size() {
+        return super.size();
+    }
+
+    public T get(int index) {
+        return (T) super.get(index);
     }
 }
