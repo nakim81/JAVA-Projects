@@ -97,6 +97,35 @@ public class ArrayDequeTest {
         assertEquals(5, (int) ad.removeLast());
     }
 
+    @Test
+    public void getTest3() {
+        ArrayDeque<Integer> ad = new ArrayDeque<Integer>();
+        ArrayDeque<Integer> ad2 = new ArrayDeque<Integer>();
+        for (int i = 0; i <= 30; i ++) {
+            ad.addLast(i);
+        }
+        for (int i = 0; i <= 25; i++) {
+            ad.removeLast();
+        }
+//        assertEquals(0, (int) ad);
+//        assertEquals(null, ad.get(4));
+    }
+
+    @Test
+    public void resizeTest() {
+        ArrayDeque<Integer> ad = new ArrayDeque<Integer>();
+        ad.addFirst(0);
+        ad.addLast(1);
+        ad.addFirst(2);
+        ad.addFirst(3);
+        ad.addLast(4);
+        ad.removeLast();
+        ad.removeLast() ;
+        ad.removeFirst();
+        ad.addFirst(8);
+        assertEquals(0, (int) ad.get(2));
+        assertEquals(null, ad.get(4));
+    }
 //    @Test
 //    public void equalsTest() {
 //        ArrayDeque<Integer> ad = new ArrayDeque<Integer>();

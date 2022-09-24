@@ -36,7 +36,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
             size++;
             nextFirst = changeNextFirst(nextFirst);
         } else {
-            resize(size * 2);
+            resize(items.length * 2);
             nextFirst = changeNextFirst(nextFirst);
             nextLast = changeNextLast(nextLast);
             items[nextFirst] = item;
@@ -62,7 +62,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
                 nextLast = changeNextLast(nextLast);
             }
         } else {
-            resize(this.size() * 2);
+            resize(items.length * 2);
             items[nextLast] = item;
             nextLast = changeNextLast(nextLast);
             size++;
@@ -90,7 +90,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
             return null;
         }
         int newIndex = changeNextLast(nextFirst);
-        return ((T) items[newIndex + index]);
+        return ((T) items[(newIndex + index) % items.length]);
     }
     @Override
     public T removeFirst() {
@@ -98,14 +98,14 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
             return null;
         }
         T removedItem;
-        if (this.size() / items.length >= 0.25 || size < MAGICNUMBER2) {
+        if (this.size() / items.length >= 0.25 || items.length < MAGICNUMBER2) {
             nextFirst = changeNextLast(nextFirst);
             removedItem = items[nextFirst];
             items[nextFirst] = null;
             size--;
             return ((T) removedItem);
         } else {
-            resize((this.size() / 2));
+            resize((items.length / 2));
             nextFirst = changeNextLast(nextFirst);
             removedItem = items[nextFirst];
             items[nextFirst] = null;
@@ -120,14 +120,14 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
             return null;
         }
         T removedItem;
-        if (this.size() / items.length >= 0.25 || size < MAGICNUMBER2) {
+        if ((float) this.size() / items.length >= 0.25 || items.length < MAGICNUMBER2) {
             nextLast = changeNextFirst(nextLast);
             removedItem = items[nextLast];
             items[nextLast] = null;
             size--;
             return ((T) removedItem);
         } else {
-            resize((this.size() / 2));
+            resize((items.length / 2));
             nextLast = changeNextFirst(nextLast);
             removedItem = items[nextLast];
             items[nextLast] = null;
