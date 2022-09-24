@@ -57,7 +57,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
             this.size++;
             nextLast = changeNextLast(nextLast);
         } else {
-            resize(this.size() * 2, nextFirst;
+            resize(this.size() * 2, nextFirst);
             nextLast = changeNextLast(nextLast);
             items[nextLast] = item;
             nextFirst = changeNextFirst(nextFirst);
