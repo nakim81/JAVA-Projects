@@ -179,7 +179,7 @@ public class ArrayDequeTest {
             ad.addFirst(i);
         }
         for (int i = 0; i < 100; i++) {
-            if(i == 68){
+            if(i == 67){
                 System.out.println();
             }
             int t = ad.removeFirst();
