@@ -86,10 +86,11 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
     }
     @Override
     public T get(int index) {
-        if (index < 0 || index > items.length - 1 || items[index] == null) {
+        if (index < 0 || index > items.length - 1) {
             return null;
         }
-        return ((T) items[index]);
+        int newIndex = changeNextLast(nextFirst);
+        return ((T) items[newIndex + index]);
     }
     @Override
     public T removeFirst() {
@@ -97,7 +98,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
             return null;
         }
         T removedItem;
-        if (this.size() / items.length >= 0.25 || size <= MAGICNUMBER2) {
+        if (this.size() / items.length >= 0.25 || size < MAGICNUMBER2) {
             nextFirst = changeNextLast(nextFirst);
             removedItem = items[nextFirst];
             items[nextFirst] = null;
@@ -105,9 +106,9 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
             return ((T) removedItem);
         } else {
             resize((this.size() / 2));
+            nextFirst = changeNextLast(nextFirst);
             removedItem = items[nextFirst];
             items[nextFirst] = null;
-            nextLast = changeNextLast(nextLast);
             size--;
             return ((T) removedItem);
         }
@@ -119,7 +120,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
             return null;
         }
         T removedItem;
-        if (this.size() / items.length >= 0.25 || size <= MAGICNUMBER2) {
+        if (this.size() / items.length >= 0.25 || size < MAGICNUMBER2) {
             nextLast = changeNextFirst(nextLast);
             removedItem = items[nextLast];
             items[nextLast] = null;
@@ -127,9 +128,9 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
             return ((T) removedItem);
         } else {
             resize((this.size() / 2));
+            nextLast = changeNextFirst(nextLast);
             removedItem = items[nextLast];
             items[nextLast] = null;
-            nextFirst = changeNextFirst(nextFirst);
             size--;
             return removedItem;
         }

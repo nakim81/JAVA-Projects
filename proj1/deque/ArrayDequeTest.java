@@ -37,7 +37,7 @@ public class ArrayDequeTest {
     }
 
     @Test
-    public void getTest() {
+    public void getRemoveFirstTest() {
         ArrayDeque<Integer> ad = new ArrayDeque<Integer>();
         ArrayDeque<Integer> ad2 = new ArrayDeque<Integer>();
         for (int i = 0; i <= 9; i ++) {
@@ -54,8 +54,14 @@ public class ArrayDequeTest {
         assertEquals(9, (int) ad.get(9));
 
         assertEquals(16, (int) ad2.get(16));
+
+        assertEquals(7, (int) ad.removeFirst());
+        assertEquals(0, (int) ad.removeFirst());
+        assertEquals(1, (int) ad.removeFirst());
+        assertEquals(2, (int) ad.removeFirst());
     }
 
+    @Test
     public void getTest2() {
         ArrayDeque<Integer> ad = new ArrayDeque<Integer>();
         ArrayDeque<Integer> ad2 = new ArrayDeque<Integer>();
@@ -67,6 +73,28 @@ public class ArrayDequeTest {
         assertEquals(6, (int) ad2.get(2));
         assertEquals(8, (int) ad2.get(15));
         assertEquals(15, (int) ad2.get(8));
+
+
+    }
+
+    @Test
+    public void removeLastTest() {
+        ArrayDeque<Integer> ad = new ArrayDeque<Integer>();
+        ArrayDeque<Integer> ad2 = new ArrayDeque<Integer>();
+        for (int i = 0; i <= 9; i ++) {
+            ad.addLast(i);
+        }
+        assertEquals(7, (int) ad.get(0));
+        assertEquals(0, (int) ad.get(1));
+        assertEquals(1, (int) ad.get(2));
+        assertEquals(3, (int) ad.get(4));
+        assertEquals(8, (int) ad.get(8));
+        assertEquals(9, (int) ad.get(9));
+
+        assertEquals(9, (int) ad.removeLast());
+        assertEquals(8, (int) ad.removeLast());
+        assertEquals(6, (int) ad.removeLast());
+        assertEquals(5, (int) ad.removeLast());
     }
 
 //    @Test
