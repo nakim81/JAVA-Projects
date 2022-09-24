@@ -39,12 +39,13 @@ public class ArrayDequeTest {
     @Test
     public void getTest() {
         ArrayDeque<Integer> ad = new ArrayDeque<Integer>();
-        for (int i = 0; i <= 5; i ++) {
+        for (int i = 0; i <= 9; i ++) {
             ad.addLast(i);
         }
         assertEquals(1, (int) ad.get(1));
         assertEquals(2, (int) ad.get(2));
         assertEquals(4, (int) ad.get(4));
+        assertEquals(9, (int) ad.get(9));
     }
 
 //    @Test

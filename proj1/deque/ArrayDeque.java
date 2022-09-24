@@ -24,14 +24,16 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
 
     private void resize(int capacity) {
         T[] a = (T[]) new Object[capacity];
-        System.arraycopy(items, 0, a, 0, size);
+        for (int i = 0; i < this.size(); i++) {
+            a[i] = items[i];
+        }
         items = a;
         this.nextFirst = items.length - 1;
         this.nextLast = size;
     }
     @Override
     public void addFirst(T item) {
-        if (size < items.length) {
+        if (size <= items.length) {
             items[nextFirst] = item;
             size++;
             nextFirst = changeNextFirst(nextFirst);
@@ -51,7 +53,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
     }
     @Override
     public void addLast(T item) {
-        if (size < items.length) {
+        if (size <= items.length) {
             items[nextLast] = item;
             size++;
             nextLast = changeNextLast(nextLast);
@@ -90,8 +92,10 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
             return null;
         }
         T removedItem;
-        if ((size - 1) / items.length <= 0.25 && size >= MAGICNUMBER2) {
-            resize(size * 2);
+        if ((size) / items.length >= 0.25 || size <= MAGICNUMBER2) {
+            ;
+        } else {
+            resize(size / 2);
         }
         nextFirst = changeNextLast(nextFirst);
         removedItem = items[nextFirst];
@@ -105,8 +109,10 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
             return null;
         }
         T removedItem;
-        if ((size - 1) / items.length <= 0.25 && size >= MAGICNUMBER2) {
-            resize(size * 2);
+        if ((size) / items.length >= 0.25 || size <= MAGICNUMBER2) {
+            ;
+        } else {
+            resize(size / 2);
         }
         nextLast = changeNextFirst(nextLast);
         removedItem = items[nextLast];
@@ -122,10 +128,10 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
 
     public boolean equals(Object o) {
         if (o instanceof Deque n) {
-            if (n.size() != this.size) {
+            if (n.size() != this.size()) {
                 return false;
             }
-            for (int i = 0; i < size; i++) {
+            for (int i = 0; i < this.size(); i++) {
                 if (n.get(i) != this.get(i)) {
                     return false;
                 }
