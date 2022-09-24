@@ -22,14 +22,11 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         return size;
     }
 
-    private void resize(int capacity) {
+    private void resize(int capacity, int start) {
         T[] a = (T[]) new Object[capacity];
-        for (int i = 0; i < this.size(); i++) {
-            a[i] = items[i];
-        }
+        System.arraycopy(items, 0, a, start, this.size());
         items = a;
-        this.nextFirst = items.length - 1;
-        this.nextLast = size;
+        this.nextLast = (nextLast + this.size()) % items.length;
     }
     @Override
     public void addFirst(T item) {
@@ -38,7 +35,9 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
             size++;
             nextFirst = changeNextFirst(nextFirst);
         } else {
-            resize(size * 2);
+            resize(size * 2, nextFirst);
+            nextFirst = changeNextFirst(nextFirst);
+            nextLast = changeNextLast(nextLast);
             items[nextFirst] = item;
             size++;
         }
@@ -55,11 +54,13 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
     public void addLast(T item) {
         if (size <= items.length) {
             items[nextLast] = item;
-            size++;
+            this.size++;
             nextLast = changeNextLast(nextLast);
         } else {
-            resize(size * 2);
+            resize(this.size() * 2, nextFirst;
+            nextLast = changeNextLast(nextLast);
             items[nextLast] = item;
+            nextFirst = changeNextFirst(nextFirst);
             size++;
         }
     }
@@ -84,7 +85,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         if (index < 0 || index > items.length - 1 || items[index] == null) {
             return null;
         }
-        return ((T) items[index + 1]);
+        return ((T) items[index]);
     }
     @Override
     public T removeFirst() {
@@ -92,33 +93,42 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
             return null;
         }
         T removedItem;
-        if ((size) / items.length >= 0.25 || size <= MAGICNUMBER2) {
-            ;
+        if (this.size() / items.length >= 0.25 || size <= MAGICNUMBER2) {
+            nextFirst = changeNextLast(nextFirst);
+            removedItem = items[nextFirst];
+            items[nextFirst] = null;
+            size--;
+            return ((T) removedItem);
         } else {
-            resize(size / 2);
+            resize((this.size() / 2), nextFirst);
+            removedItem = items[nextFirst];
+            items[nextFirst] = null;
+            nextLast = changeNextLast(nextLast);
+            size--;
+            return ((T) removedItem);
         }
-        nextFirst = changeNextLast(nextFirst);
-        removedItem = items[nextFirst];
-        items[nextFirst] = null;
-        size--;
-        return ((T) removedItem);
+
     }
     @Override
     public T removeLast() {
-        if (size == 0) {
+        if (this.size() == 0) {
             return null;
         }
         T removedItem;
-        if ((size) / items.length >= 0.25 || size <= MAGICNUMBER2) {
-            ;
+        if (this.size() / items.length >= 0.25 || size <= MAGICNUMBER2) {
+            nextLast = changeNextFirst(nextLast);
+            removedItem = items[nextLast];
+            items[nextLast] = null;
+            size--;
+            return ((T) removedItem);
         } else {
-            resize(size / 2);
+            resize((this.size() / 2), nextFirst);
+            removedItem = items[nextLast];
+            items[nextLast] = null;
+            nextFirst = changeNextFirst(nextFirst);
+            size--;
+            return removedItem;
         }
-        nextLast = changeNextFirst(nextLast);
-        removedItem = items[nextLast];
-        items[nextLast] = null;
-        size--;
-        return ((T) removedItem);
     }
 
     @Override
