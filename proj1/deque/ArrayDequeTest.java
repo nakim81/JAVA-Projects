@@ -175,32 +175,17 @@ public class ArrayDequeTest {
     @Test
     public void removeLastTest3() {
         ArrayDeque<Integer> ad = new ArrayDeque<Integer>();
-        ad.addFirst(0);
-        ad.addFirst(1);
-        ad.addFirst(2);
-        ad.addFirst(3);
-        ad.addFirst(4);
-        ad.addFirst(5);
-        ad.addFirst(6);
-        ad.addFirst(7);
-        ad.addFirst(8);
-        ad.removeFirst();
-        ad.removeFirst();
-        ad.removeFirst();
-        ad.removeFirst();
-        ad.removeFirst();
-        ad.removeFirst();
-        ad.removeFirst();
-        ad.removeFirst();
-        ad.removeFirst();
-        ad.addFirst(0);
-        ad.addFirst(1);
-        ad.addFirst(2);
-        ad.addFirst(3);
-        ad.addFirst(4);
-        ad.addFirst(5);
-        ad.addFirst(6);
-        ad.addFirst(7);
-        ad.addFirst(8);
+        for (int i = 0; i < 100; i++) {
+            ad.addFirst(i);
+        }
+        for (int i = 0; i < 100; i++) {
+            if(i == 68){
+                System.out.println();
+            }
+            int t = ad.removeFirst();
+        }
+        for (int i = 0; i < 100; i++) {
+            ad.addFirst(i);
+        }
     }
 }

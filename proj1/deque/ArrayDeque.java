@@ -103,7 +103,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
             return null;
         }
         T removedItem;
-        if (items.length > MAGICNUMBER2 && ((float) this.size() / items.length) < 0.25) {
+        if (items.length > MAGICNUMBER2 && ((float) this.size() / items.length) <= 0.25) {
             resize((items.length / 2));
             nextFirst = changeNextLast(nextFirst);
             removedItem = items[nextFirst];
@@ -125,7 +125,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
             return null;
         }
         T removedItem;
-        if (items.length > MAGICNUMBER2 && ((float) this.size() / items.length) < 0.25) {
+        if (items.length > MAGICNUMBER2 && ((float) this.size() / items.length) <= 0.25) {
             resize((items.length / 2));
             nextLast = changeNextFirst(nextLast);
             removedItem = items[nextLast];
