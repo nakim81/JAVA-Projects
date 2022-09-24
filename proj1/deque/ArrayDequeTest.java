@@ -141,6 +141,35 @@ public class ArrayDequeTest {
         assertEquals(0, (int) ad.removeLast());
     }
 
+
+    @Test
+    public void resizeTest2() {
+        ArrayDeque<Integer> ad = new ArrayDeque<Integer>();
+        ad.addFirst(0);
+        ad.addFirst(1);
+        ad.removeFirst();
+        ad.removeLast();
+        ad.addLast(4);
+        ad.removeFirst();
+        ad.addFirst(6);
+        ad.addFirst(7);
+        ad.addLast(8);
+        ad.removeFirst();
+        ad.addLast(10);
+        ad.addFirst(11);
+        ad.addLast(12);
+        ad.addLast(13);
+        ad.addLast(14);
+        ad.get(5);
+        ad.addFirst(16);
+        ad.addFirst(17);
+        ad.get(5);
+        ad.get(0);
+        ad.addLast(20);
+        ad.get(5);
+        ad.removeFirst();
+//        assertEquals(0, (int) ad.removeLast());
+    }
 //    @Test
 //    public void equalsTest() {
 //        ArrayDeque<Integer> ad = new ArrayDeque<Integer>();
