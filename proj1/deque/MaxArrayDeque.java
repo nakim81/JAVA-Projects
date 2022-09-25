@@ -37,12 +37,4 @@ public class MaxArrayDeque<T> extends ArrayDeque<T> {
         }
         return max;
     }
-
-    public int size() {
-        return super.size();
-    }
-
-    public T get(int index) {
-        return (T) super.get(index);
-    }
 }
