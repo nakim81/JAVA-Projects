@@ -116,47 +116,52 @@ public class Model extends Observable {
      *    and the trailing tile does not.
      */
     public void tilt(Side side) {
-        // TODO: Fill in this function.
         _board.setViewingPerspective(side);
-        for (int c = 0; c < _board.size(); c++) {
-            for (int r = _board.size() - 1; r >= 0; r--) {
-                Tile t = _board.tile(c, r);
-                if (t != null) {
-                    int nullRow = 3;
-                    while (nullRow >= r) {
-                        if (_board.tile(c, nullRow) == null) {
-                            if (nullRow >= r) {
-                                _board.move(c, nullRow, t);
-                                break;
-                            }
-                        }
-                        nullRow--;
-                    }
-                }
-            }
-            for (int r2 = _board.size() - 1; r2 >= 0; r2--) {
-                Tile t2 = _board.tile(c, r2);
-                int nextRow = r2 - 1;
-                Tile nextTile = _board.tile(c, nextRow);
-                if (t2 == null || nextTile == null) {
-                    break;
-                }
-                if (nextTile.value() == t2.value()) {
-                    _board.move(c, r2, nextTile);
-                    _score += t2.value() * 2;
-                    for (int i = nextRow - 1; i >= 0; i-- ) {
-                        if (_board.tile(c, i) == null) {
-                            break;
-                        }
-                        if (i < _board.size()) {
-                            _board.move(c, i + 1, _board.tile(c, i));
-                        }
-                    }
-                }
-            }
+       for (int c = 0; c < _board.size(); c++) {
+           moveIfNull(c);
+           mergeIfPossible(c);
         }
         _board.setViewingPerspective(Side.NORTH);
         checkGameOver();
+    }
+
+    private void moveIfNull(int c) {
+        int topRow = _board.size() - 1;
+        for (int r = topRow; r >= 0; r--) {
+            Tile t = _board.tile(c, r);
+            if (t != null) {
+                int topNullRow = 3;
+                while (topNullRow >= r) {
+                    Tile destination = _board.tile(c, topNullRow);
+                    if (destination == null) {
+                        _board.move(c, topNullRow, t);
+                        break;
+                    }
+                    topNullRow--;
+                }
+            }
+        }
+    }
+
+    private void mergeIfPossible(int c) {
+        int topRow = _board.size() - 1;
+        for (int r = topRow; r >= 0; r--) {
+            Tile t = _board.tile(c, r);
+            Tile t2 = _board.tile(c, r - 1);
+            if (t == null || t2 == null) {
+                break;
+            }
+            if (t.value() == t2.value()) {
+                _board.move(c, r, t2);
+                _score += t.value() * 2;
+                for (int r2 = r - 2; r2 >= 0; r2-- ) {
+                    if (_board.tile(c, r2) == null) {
+                        break;
+                    }
+                    _board.move(c, r2 + 1, _board.tile(c, r2));
+                }
+            }
+        }
     }
 
 
@@ -177,7 +182,6 @@ public class Model extends Observable {
      *  Empty spaces are stored as null.
      */
     public static boolean emptySpaceExists(Board b) {
-        // TODO: Fill in this function.HEAD
         for (int c = 0; c < b.size(); c++){
             for (int r = 0; r < b.size(); r++) {
                 if (b.tile(c, r) == null) {
@@ -194,7 +198,6 @@ public class Model extends Observable {
      * given a Tile object t, we get its value with t.value().
      */
     public static boolean maxTileExists(Board b) {
-        // TODO: Fill in this function.HEAD
         for (int c = 0; c < b.size(); c++){
             for (int r = 0; r < b.size(); r++) {
                 if (b.tile(c, r) != null && b.tile(c, r).value() == MAX_PIECE) {
@@ -212,7 +215,6 @@ public class Model extends Observable {
      * 2. There are two adjacent tiles with the same value.
      */
     public static boolean atLeastOneMoveExists(Board b) {
-        // TODO: Fill in this function.HEAD
         int[] verticalMove = {0, -1, 0, 1};
         int[] horizontalMove = {-1, 0, 1, 0};
         for (int c = 0; c < b.size(); c++){
