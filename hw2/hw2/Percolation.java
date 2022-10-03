@@ -85,6 +85,9 @@ public class Percolation {
     }
 
     public boolean percolates() {
+        if (n == 1) {
+            return isOpen(0, 0);
+        }
         return percolationGrid.connected(top, bottom);
     }
 }
