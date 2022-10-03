@@ -4,7 +4,6 @@ import edu.princeton.cs.algs4.StdRandom;
 import edu.princeton.cs.algs4.StdStats;
 
 public class PercolationStats {
-    private int N;
     private int T;
     private double[] avgOpenTillPercolate;
 
@@ -13,7 +12,6 @@ public class PercolationStats {
             throw new java.lang.IllegalArgumentException();
         }
         this.T = T;
-        this.N = N;
         avgOpenTillPercolate = new double[T];
         for (int i = 0; i < T; i++) {
             Percolation percolation = pf.make(N);
@@ -22,7 +20,7 @@ public class PercolationStats {
                 int col = StdRandom.uniform(0, N);
                 percolation.open(row, col);
             }
-            avgOpenTillPercolate[i] = (double) (percolation.numberOfOpenSites() / (N * N));
+            avgOpenTillPercolate[i] = (double) percolation.numberOfOpenSites() / (N * N);
         }
     }
 
