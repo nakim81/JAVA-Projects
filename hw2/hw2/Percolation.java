@@ -10,7 +10,6 @@ public class Percolation {
     private int top;
     private int bottom;
     private int openSite = 0;
-    private int MAGICNUMBER = 4;
 
     private int xyTo1D(int row, int col) {
         return n * row + col;
@@ -50,7 +49,7 @@ public class Percolation {
         openSite += 1;
         int[] rows = {0, -1, 0, 1};
         int[] cols = {-1, 0, 1, 0};
-        for (int count = 0; count < MAGICNUMBER; count++) {
+        for (int count = 0; count < rows.length; count++) {
             int newRow = row + rows[count];
             int newCol = col + cols[count];
             if (newRow >= 0 && newRow < n && newCol >= 0 && newCol < n) {
