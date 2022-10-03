@@ -25,6 +25,7 @@ public class PercolationStats {
             avgOpenTillPercolate[i] = (double) (percolation.numberOfOpenSites() / (N * N));
         }
     }
+
     public double mean() {
         return StdStats.mean(avgOpenTillPercolate);
     }

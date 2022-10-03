@@ -11,7 +11,10 @@ public class Percolation {
     private int bottom;
     private int openSite = 0;
 
-    private int xyTo1D(int row, int col) { return n * row + col; }
+    private int xyTo1D(int row, int col) {
+        return n * row + col;
+    }
+
     public Percolation(int N) {
         if (N <= 0) {
             throw new java.lang.IllegalArgumentException();
@@ -23,13 +26,13 @@ public class Percolation {
         percolationGrid = new WeightedQuickUnionUF(size + 2);
         virtualPercolationGrid = new WeightedQuickUnionUF(size + 1);
         checkOpen = new boolean[n][n];
-        for (int i = 0; i < N; i ++) {
+        for (int i = 0; i < N; i++) {
             percolationGrid.union(top, xyTo1D(0, i));
-            percolationGrid.union(bottom, xyTo1D(N-1, i));
+            percolationGrid.union(bottom, xyTo1D(N - 1, i));
             virtualPercolationGrid.union(top, xyTo1D(0, i));
         }
-        for (int r = 0; r < n; r ++) {
-            for (int c = 0; c < n; c ++) {
+        for (int r = 0; r < n; r++) {
+            for (int c = 0; c < n; c++) {
                 checkOpen[r][c] = false;
             }
         }
@@ -46,7 +49,7 @@ public class Percolation {
         openSite += 1;
         int[] rows = {0, -1, 0, 1};
         int[] cols = {-1, 0, 1, 0};
-        for (int count = 0; count < 4; count ++){
+        for (int count = 0; count < 4; count++) {
             int newRow = row + rows[count];
             int newCol = col + cols[count];
             if (newRow >= 0 && newRow < n && newCol >= 0 && newCol < n) {
@@ -76,7 +79,12 @@ public class Percolation {
         }
         return virtualPercolationGrid.connected(xyTo1D(row, col), top);
     }
-    public int numberOfOpenSites() { return openSite; }
 
-    public boolean percolates() { return percolationGrid.connected(top, bottom); }
+    public int numberOfOpenSites() {
+        return openSite;
+    }
+
+    public boolean percolates() {
+        return percolationGrid.connected(top, bottom);
+    }
 }
