@@ -4,6 +4,8 @@ import edu.princeton.cs.algs4.In;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Objects;
 
 /** An object that provides utility methods for making queries on the
  *  Google NGrams dataset (or a subset thereof).
@@ -16,20 +18,34 @@ import java.util.HashMap;
  */
 public class NGramMap {
     /** Constructs an NGramMap from WORDSFILENAME and COUNTSFILENAME. */
-    private HashMap<String, TimeSeries> hMap;
+    public HashMap<String, TimeSeries> hMap;
     private TimeSeries totalCount;
     public NGramMap(String wordsFilename, String countsFilename) {
         this.hMap = new HashMap<>();
+        this.totalCount = new TimeSeries();
         In wordsFile = new In(wordsFilename);
         In countsFile = new In(countsFilename);
+        String firstItemInFile;
+        int secondItemInFile;
+        double thirdItemInFile;
+        double fourthItemInFile;
         while (wordsFile.hasNextLine()) {
-            String firstItemInFile = wordsFile.readString();
-            int secondItemInFile = wordsFile.readInt();
-            double thirdItemInFile = wordsFile.readDouble();
-            double fourthItemInFile = wordsFile.readDouble();
-            TimeSeries ts = new TimeSeries();
-            ts.put(secondItemInFile, thirdItemInFile);
-            hMap.put(firstItemInFile, ts);
+            try {
+                firstItemInFile = wordsFile.readString();
+                secondItemInFile = wordsFile.readInt();
+                thirdItemInFile = wordsFile.readDouble();
+                fourthItemInFile = wordsFile.readDouble();
+            } catch (Exception e) {
+                break;
+            }
+
+            if (hMap.get(firstItemInFile) != null) {
+                hMap.get(firstItemInFile).put(secondItemInFile, thirdItemInFile);
+            } else {
+                TimeSeries ts = new TimeSeries();
+                ts.put(secondItemInFile, thirdItemInFile);
+                hMap.put(firstItemInFile, ts);
+            }
         }
         while (countsFile.hasNextLine()) {
             String line = countsFile.readLine();
@@ -54,9 +70,8 @@ public class NGramMap {
      *  changes made to the object returned by this function should not also affect the
      *  NGramMap. This is also known as a "defensive copy". */
     public TimeSeries countHistory(String word, int startYear, int endYear) {
-        TimeSeries ts = hMap.get(word);
-        TimeSeries returnTs = new TimeSeries(ts, startYear, endYear);
-        return returnTs;
+        TimeSeries ts = new TimeSeries(hMap.get(word), startYear, endYear);
+        return ts;
     }
 
     /** Returns a defensive copy of the total number of words recorded per year in all volumes. */
@@ -85,13 +100,23 @@ public class NGramMap {
 
     /** Returns the summed relative frequency per year of all words in WORDS. */
     public TimeSeries summedWeightHistory(Collection<String> words) {
-        return null;
+        String[] arr = (String[]) words.toArray();
+        TimeSeries cumulativeWH = new TimeSeries();
+        for (int i = 1; i < arr.length; i++) {
+            cumulativeWH = cumulativeWH.plus(weightHistory(arr[i]));
+        }
+        return cumulativeWH;
     }
 
     /** Provides the summed relative frequency per year of all words in WORDS
      *  between STARTYEAR and ENDYEAR, inclusive of both ends. If a word does not exist in
      *  this time frame, ignore it rather than throwing an exception. */
     public TimeSeries summedWeightHistory(Collection<String> words, int startYear, int endYear) {
-        return null;
+        Object[] arr = words.toArray();
+        TimeSeries cumulativeWH = new TimeSeries();
+        for (int i = 0; i < arr.length; i++) {
+            cumulativeWH = cumulativeWH.plus(weightHistory((String)(arr[i]), startYear, endYear));
+        }
+        return cumulativeWH;
     }
 }
