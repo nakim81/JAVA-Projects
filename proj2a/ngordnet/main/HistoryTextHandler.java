@@ -4,7 +4,6 @@ import ngordnet.hugbrowsermagic.NgordnetQuery;
 import ngordnet.hugbrowsermagic.NgordnetQueryHandler;
 import ngordnet.ngrams.*;
 
-import java.util.HashMap;
 import java.util.List;
 
 public class HistoryTextHandler extends NgordnetQueryHandler {

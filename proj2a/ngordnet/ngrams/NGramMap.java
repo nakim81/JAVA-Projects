@@ -30,14 +30,12 @@ public class NGramMap {
         String firstItemInFile;
         int secondItemInFile;
         double thirdItemInFile;
-        double fourthItemInFile;
-        while (wordsFile.hasNextLine() && !wordsFile.isEmpty()) {
+        while (wordsFile.hasNextLine()) {
             String line = wordsFile.readLine();
-            String[] tokens = line.split(" ");
+            String[] tokens = line.split("\t");
             firstItemInFile = tokens[0];
             secondItemInFile = Integer.parseInt(tokens[1]);
             thirdItemInFile = Double.parseDouble(tokens[2]);
-            fourthItemInFile = Double.parseDouble(tokens[3]);
             if (hMap.get(firstItemInFile) != null) {
                 hMap.get(firstItemInFile).put(secondItemInFile, thirdItemInFile);
             } else {

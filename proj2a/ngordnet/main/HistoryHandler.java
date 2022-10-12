@@ -6,7 +6,6 @@ import ngordnet.plotting.Plotter;
 import org.knowm.xchart.XYChart;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class HistoryHandler extends NgordnetQueryHandler {
     private NGramMap myMap;
