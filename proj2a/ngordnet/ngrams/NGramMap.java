@@ -32,10 +32,12 @@ public class NGramMap {
         double thirdItemInFile;
         double fourthItemInFile;
         while (wordsFile.hasNextLine() && !wordsFile.isEmpty()) {
-            firstItemInFile = wordsFile.readString();
-            secondItemInFile = wordsFile.readInt();
-            thirdItemInFile = wordsFile.readDouble();
-            fourthItemInFile = wordsFile.readDouble();
+            String line = wordsFile.readLine();
+            String[] tokens = line.split(" ");
+            firstItemInFile = tokens[0];
+            secondItemInFile = Integer.parseInt(tokens[1]);
+            thirdItemInFile = Double.parseDouble(tokens[2]);
+            fourthItemInFile = Double.parseDouble(tokens[3]);
             if (hMap.get(firstItemInFile) != null) {
                 hMap.get(firstItemInFile).put(secondItemInFile, thirdItemInFile);
             } else {
@@ -109,7 +111,7 @@ public class NGramMap {
      * Returns the summed relative frequency per year of all words in WORDS.
      */
     public TimeSeries summedWeightHistory(Collection<String> words) {
-        String[] arr = (String[]) words.toArray();
+        Object[] arr = words.toArray();
         TimeSeries cumulativeWH = new TimeSeries();
         for (int i = 1; i < arr.length; i++) {
             cumulativeWH = cumulativeWH.plus(weightHistory((String) (arr[i])));
@@ -129,9 +131,5 @@ public class NGramMap {
             cumulativeWH = cumulativeWH.plus(weightHistory((String) (arr[i]), startYear, endYear));
         }
         return cumulativeWH;
-    }
-
-    public HashMap getHMap() {
-        return hMap;
     }
 }

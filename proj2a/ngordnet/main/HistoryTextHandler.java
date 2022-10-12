@@ -8,9 +8,9 @@ import java.util.HashMap;
 import java.util.List;
 
 public class HistoryTextHandler extends NgordnetQueryHandler {
-    private HashMap m;
+    private NGramMap myMap;
     public HistoryTextHandler(NGramMap map) {
-        m = map.getHMap();
+        myMap = map;
     }
 
     @Override
@@ -18,7 +18,7 @@ public class HistoryTextHandler extends NgordnetQueryHandler {
         List<String> words = q.words();
         String response = "";
         for (String word: words) {
-            response += String.format("%s: %s\n", word, m.get(word).toString());
+            response += String.format("%s: %s\n", word, myMap.weightHistory(word).toString());
         }
         return response;
     }

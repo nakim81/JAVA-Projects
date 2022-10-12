@@ -32,7 +32,7 @@ public class TimeSeries extends TreeMap<Integer, Double> {
     public List<Integer> years() {
         List<Integer> years = new ArrayList<>();
         Iterator<Integer> myKeyIter = navigableKeySet().iterator();
-        while (myKeyIter.hasNext()){
+        while (myKeyIter.hasNext()) {
             years.add(myKeyIter.next());
         }
         return years;
