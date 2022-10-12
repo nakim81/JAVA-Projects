@@ -20,12 +20,13 @@ public class TestTimeSeries {
         for (int i = 1991; i < 2242; i++) {
             catPopulation.put(i, (double) (i));
         }
+        TimeSeries catPopulation2 = new TimeSeries(catPopulation, 1991, 2241);
 
         TimeSeries dogPopulation = new TimeSeries();
         dogPopulation.put(1994, 0.0);
         dogPopulation.put(1995, 0.0);
 
-        TimeSeries totalPopulation = catPopulation.plus(dogPopulation);
+        TimeSeries totalPopulation = catPopulation2.plus(dogPopulation);
         // expected: 1991: 0,
         //           1992: 100
         //           1994: 600
