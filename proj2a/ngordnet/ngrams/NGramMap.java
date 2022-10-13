@@ -88,10 +88,7 @@ public class NGramMap {
      * all words recorded in that year.
      */
     public TimeSeries weightHistory(String word) {
-        TimeSeries history = countHistory(word);
-        TimeSeries totalHistory = totalCountHistory();
-        TimeSeries weightHistory = history.dividedBy(totalCountHistory());
-        return weightHistory;
+        return countHistory(word).dividedBy(totalCountHistory());
     }
 
     /**
@@ -101,8 +98,7 @@ public class NGramMap {
     public TimeSeries weightHistory(String word, int startYear, int endYear) {
         TimeSeries history = new TimeSeries(countHistory(word), startYear, endYear);
         TimeSeries totalHistory = new TimeSeries(totalCountHistory(), startYear, endYear);
-        TimeSeries weightHistory = history.dividedBy(totalHistory);
-        return weightHistory;
+        return history.dividedBy(totalHistory);
     }
 
     /**
@@ -111,7 +107,7 @@ public class NGramMap {
     public TimeSeries summedWeightHistory(Collection<String> words) {
         Object[] arr = words.toArray();
         TimeSeries cumulativeWH = new TimeSeries();
-        for (int i = 1; i < arr.length; i++) {
+        for (int i = 0; i < arr.length; i++) {
             cumulativeWH = cumulativeWH.plus(weightHistory((String) (arr[i])));
         }
         return cumulativeWH;

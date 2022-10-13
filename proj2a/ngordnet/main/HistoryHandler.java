@@ -19,7 +19,7 @@ public class HistoryHandler extends NgordnetQueryHandler {
         ArrayList<String> labels = new ArrayList<>();
         for (String word : q.words()) {
             labels.add(word);
-            lts.add((TimeSeries) myMap.countHistory(word));
+            lts.add(myMap.countHistory(word));
         }
 
         XYChart chart = Plotter.generateTimeSeriesChart(labels, lts);
