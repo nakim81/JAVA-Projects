@@ -66,22 +66,24 @@ public class TimeSeries extends TreeMap<Integer, Double> {
         TimeSeries newTS = new TimeSeries();
         int myPointer = 0;
         int tsPointer = 0;
+        List<Integer> myYears = years();
+        List<Integer> tsYears = ts.years();
         while (myPointer < this.size() || tsPointer < ts.size()) {
             if (myPointer >= this.size()) {
                 // used all elements in this
-                int tsYear = ts.years().get(tsPointer);
+                int tsYear = tsYears.get(tsPointer);
                 newTS.put(tsYear, ts.get(tsYear));
                 tsPointer++;
                 continue;
             } else if (tsPointer >= ts.size()) {
                 // used all elements in parameter ts
-                int myYear = years().get(myPointer);
+                int myYear = myYears.get(myPointer);
                 newTS.put(myYear, get(myYear));
                 myPointer++;
                 continue;
             }
-            int myYear = years().get(myPointer);
-            int tsYear = ts.years().get(tsPointer);
+            int myYear = myYears.get(myPointer);
+            int tsYear = tsYears.get(tsPointer);
             if (myYear == tsYear) {
                 newTS.put(myYear, get(myYear) + ts.get(tsYear));
                 myPointer++;
@@ -107,15 +109,19 @@ public class TimeSeries extends TreeMap<Integer, Double> {
         TimeSeries newTS = new TimeSeries();
         int myPointer = 0;
         int tsPointer = 0;
-        while (myPointer < this.size() || tsPointer < ts.size()) {
-            if (myPointer >= this.size()) {
+        List<Integer> myYears = years();
+        List<Integer> tsYears = ts.years();
+        int mySize = size();
+        int tsSize = ts.size();
+        while (myPointer < mySize || tsPointer < tsSize) {
+            if (myPointer >= mySize) {
                 tsPointer++;
                 continue;
-            } else if (tsPointer >= ts.size()) {
+            } else if (tsPointer >= tsSize) {
                 throw new IllegalArgumentException();
             }
-            int myYear = years().get(myPointer);
-            int tsYear = ts.years().get(tsPointer);
+            int myYear = myYears.get(myPointer);
+            int tsYear = tsYears.get(tsPointer);
             if (myYear == tsYear) {
                 newTS.put(myYear, (get(myYear) / ts.get(tsYear)));
                 myPointer++;
