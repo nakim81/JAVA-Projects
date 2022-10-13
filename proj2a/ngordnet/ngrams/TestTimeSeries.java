@@ -63,6 +63,7 @@ public class TestTimeSeries {
         ts1.put(1994, 200.0);
         ts1.put(1995, 200.0);
         ts1.put(1997, 200.0);
+        TimeSeries ts3 = new TimeSeries(ts1,1991, 1997);
 
         TimeSeries ts2 = new TimeSeries();
         ts2.put(1994, 400.0);
@@ -71,7 +72,7 @@ public class TestTimeSeries {
         ts2.put(1998, 200.0);
         ts2.put(1999, 200.0);
 
-        TimeSeries totalPopulation = ts1.plus(ts2);
+        TimeSeries totalPopulation = ts3.plus(ts2);
 
         List<Integer> expectedYears = new ArrayList<>
                 (Arrays.asList(1991, 1992, 1994, 1995, 1996, 1997, 1998, 1999));

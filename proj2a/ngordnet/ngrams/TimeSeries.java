@@ -22,8 +22,10 @@ public class TimeSeries extends TreeMap<Integer, Double> {
      */
     public TimeSeries(TimeSeries ts, int startYear, int endYear) {
         List<Integer> years = ts.years();
-        for (int year : years) {
-            this.put(year, ts.get(year));
+        for (int year = startYear; year <= endYear; year++) {
+            if (years.contains(year)) {
+                this.put(year, ts.get(year));
+            }
         }
     }
 
