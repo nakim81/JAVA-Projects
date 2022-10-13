@@ -107,8 +107,8 @@ public class NGramMap {
     public TimeSeries summedWeightHistory(Collection<String> words) {
         Object[] arr = words.toArray();
         TimeSeries cumulativeWH = new TimeSeries();
-        for (int i = 0; i < arr.length; i++) {
-            cumulativeWH = cumulativeWH.plus(weightHistory((String) (arr[i])));
+        for (Object word : arr) {
+            cumulativeWH = cumulativeWH.plus(weightHistory((String) word));
         }
         return cumulativeWH;
     }
@@ -121,8 +121,8 @@ public class NGramMap {
     public TimeSeries summedWeightHistory(Collection<String> words, int startYear, int endYear) {
         Object[] arr = words.toArray();
         TimeSeries cumulativeWH = new TimeSeries();
-        for (int i = 0; i < arr.length; i++) {
-            cumulativeWH = cumulativeWH.plus(weightHistory((String) (arr[i]), startYear, endYear));
+        for (Object word : arr) {
+            cumulativeWH = cumulativeWH.plus(weightHistory((String) word, startYear, endYear));
         }
         return cumulativeWH;
     }
