@@ -22,13 +22,11 @@ public class HistoryHandler extends NgordnetQueryHandler {
         ArrayList<TimeSeries> lts = new ArrayList<>();
         ArrayList<String> labels = new ArrayList<>();
         List<String> words = q.words();
+        int startYear = q.startYear();
+        int endYear = q.endYear();
         for (String word : words) {
             labels.add(word);
-            //lts.add(myMap.weightHistory(word));
-        }
-
-        for (String word : words) {
-            lts.add(myMap.weightHistory(word));
+            lts.add(myMap.weightHistory(word, startYear, endYear));
         }
 
         XYChart chart = Plotter.generateTimeSeriesChart(labels, lts);
