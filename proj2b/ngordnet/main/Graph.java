@@ -10,7 +10,7 @@ public class Graph extends HashMap<String, Set<String>> {
 
     public void setEdge(String word, String child) {
         //setting and edge by putting into the corresponding TreeSets
-        if (!containsKey(word)) {
+        if (get(word) == null) {
             Set<String> set = new TreeSet<>();
             set.add(child);
             put(word, set);
@@ -27,8 +27,9 @@ public class Graph extends HashMap<String, Set<String>> {
         while (!traversalStack.isEmpty()) {
             String current = traversalStack.pop();
             children.add(current);
-            if (containsKey(current)) {
-                for (String child : get(current)) {
+            Set<String> temp = get(current);
+            if (temp != null) {
+                for (String child : temp) {
                     traversalStack.push(child);
                 }
             }
