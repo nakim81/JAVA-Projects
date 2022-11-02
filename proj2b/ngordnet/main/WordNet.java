@@ -11,7 +11,7 @@ public class WordNet {
         In hyponymFile = new In(hyponymFileName);
         int firstSynsetItem;
         String secondSynsetItem;
-        Map<Integer, List<String>> map = new HashMap<>();
+        Map<Integer, String> map = new HashMap<>();
         while (synsetFile.hasNextLine()) {
             String[] line = synsetFile.readLine().split(",");
             firstSynsetItem = Integer.parseInt(line[0]);
@@ -20,21 +20,24 @@ public class WordNet {
             if (secondSynsetItem.contains(" ")) {
                 String[] line2 = secondSynsetItem.split("\t");
                 for (String word : line2) {
-                    list.add(word);
+                    graph.put(word, null);
                 }
             } else {
-                list.add(secondSynsetItem);
+                graph.put(secondSynsetItem, null);
             }
-            graph.put(secondSynsetItem, null);
+            map.put(firstSynsetItem, secondSynsetItem);
         }
         while(hyponymFile.hasNextLine()) {
-            //한줄씩 봤을때, 첫 숫자가 부모, 나머지가 자식.
             String[] line = hyponymFile.readLine().split(",");
-            String word = map.get(Integer.parseInt(line[0]));
-            for (int i = 1; i < line.length; i++) {
-
-
-                graph.setEdge(word, map.get(Integer.parseInt(line[i])));
+            String[] words = map.get(Integer.parseInt(line[0])).split("\t");
+            for (String word : words) {
+                for (int i = 1; i < line.length; i++) {
+                    if (map.get(Integer.parseInt(line[i])).contains(" ")) {
+                        
+                    } else {
+                        graph.setEdge(word, map.get(Integer.parseInt(line[i])));
+                    }
+                }
             }
         }
     }
