@@ -7,11 +7,14 @@ import ngordnet.ngrams.NGramMap;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
 public class HyponymsHandler extends NgordnetQueryHandler {
     private WordNet wn;
+
     public HyponymsHandler(WordNet wn) {
         this.wn = wn;
     }
+
     @Override
     public String handle(NgordnetQuery q) {
         List<String> words = q.words();

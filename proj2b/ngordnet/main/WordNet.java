@@ -1,43 +1,57 @@
 package ngordnet.main;
 
 import java.util.*;
+
 import edu.princeton.cs.algs4.In;
 
 public class WordNet {
     public Graph graph;
+
     public WordNet(String synsetFileName, String hyponymFileName) {
+        /**How do I handle multiple words for one wordID? Using single array or single map didn't work out.
+         * My third approach is multiple maps.
+         * Possible approaches that I am considering now: one map for wordID and word, one map for hyponyms, and try to
+         * build graph by combining data in two maps.
+         */
         graph = new Graph();
         In synsetFile = new In(synsetFileName);
         In hyponymFile = new In(hyponymFileName);
-        int firstSynsetItem;
-        String secondSynsetItem;
         Map<Integer, String> map = new HashMap<>();
+        Map<Integer, Set<Integer>> map2 = new HashMap<>();
         while (synsetFile.hasNextLine()) {
             String[] line = synsetFile.readLine().split(",");
-            firstSynsetItem = Integer.parseInt(line[0]);
-            secondSynsetItem = line[1];
-            List<String> list = new ArrayList<>();
-            if (secondSynsetItem.contains(" ")) {
-                String[] line2 = secondSynsetItem.split("\t");
-                for (String word : line2) {
-                    graph.put(word, null);
-                }
-            } else {
-                graph.put(secondSynsetItem, null);
-            }
+            Integer firstSynsetItem = Integer.parseInt(line[0]);
+            String secondSynsetItem = line[1];
             map.put(firstSynsetItem, secondSynsetItem);
         }
-        while(hyponymFile.hasNextLine()) {
+        while (hyponymFile.hasNextLine()) {
             String[] line = hyponymFile.readLine().split(",");
-            String[] words = map.get(Integer.parseInt(line[0])).split("\t");
-            for (String word : words) {
-                for (int i = 1; i < line.length; i++) {
-                    if (map.get(Integer.parseInt(line[i])).contains(" ")) {
-                        
-                    } else {
-                        graph.setEdge(word, map.get(Integer.parseInt(line[i])));
+            Integer word = Integer.parseInt(line[0]);
+            Set<Integer> hypos;
+            if (map2.containsKey(word)) {
+                hypos = map2.get(word);
+            } else {
+                hypos = new HashSet<>();
+            }
+            for (int i = 1; i < line.length; i++) {
+                hypos.add(Integer.parseInt(line[i]));
+            }
+            map2.put(word, hypos);
+        }
+        for (Integer integer : map.keySet()) {
+            Set<Integer> hypoIDs = map2.get(integer);
+            //String[] words = map.get(integer).split("\t");
+            if (hypoIDs != null) {
+                //for (String word : words) {
+                    for (Integer hypoID : hypoIDs) {
+                        //String[] hypoList = map.get(hypoID).split("\t");
+                        //for (String hypo : hypoList) {
+                            String word = map.get(integer);
+                            String hypo = map.get(hypoID);
+                            graph.setEdge(word, hypo);
+                        //}
                     }
-                }
+                //}
             }
         }
     }
