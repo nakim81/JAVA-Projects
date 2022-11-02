@@ -11,24 +11,21 @@ public class WordNet {
         In hyponymFile = new In(hyponymFileName);
         int firstSynsetItem;
         String secondSynsetItem;
-        ArrayList<String> list = new ArrayList<String>();
+        ArrayList<String> list = new ArrayList<>();
         while (synsetFile.hasNextLine()) {
-            String line = synsetFile.readLine();
-            String[] tokens = line.split(",");
-            firstSynsetItem = Integer.parseInt(tokens[0]);
-            secondSynsetItem = tokens[1];
+            String[] line = synsetFile.readLine().split(",");
+            firstSynsetItem = Integer.parseInt(line[0]);
+            secondSynsetItem = line[1];
             list.set(firstSynsetItem, secondSynsetItem);
             graph.put(secondSynsetItem, null);
         }
         while(hyponymFile.hasNextLine()) {
-            String line = hyponymFile.readLine();
-            String[] tokens = line.split(",");
-            String word = list.get(Integer.parseInt(tokens[0]));
-            for (int i = 1; i < line.length(); i++) {
-                graph.setEdge(word, list.get(Integer.parseInt(tokens[i])));
+            String[] line = hyponymFile.readLine().split(",");
+            String word = list.get(Integer.parseInt(line[0]));
+            for (int i = 1; i < line.length; i++) {
+                graph.setEdge(word, list.get(Integer.parseInt(line[i])));
             }
         }
-
     }
 
     public List<String> getHyponyms(String word) {

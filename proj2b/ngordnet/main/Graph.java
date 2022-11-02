@@ -20,7 +20,19 @@ public class Graph extends HashMap<String, Set<String>> {
     }
 
     public List<String> getChildren(String word) {
-        //maybe tree traversal
-        return new ArrayList<>();
+        //Tree traversal
+        List<String> children = new ArrayList<>();
+        Stack<String> traversalStack = new Stack<>();
+        traversalStack.push(word);
+        while (!traversalStack.isEmpty()) {
+            String current = traversalStack.pop();
+            children.add(current);
+            if (containsKey(current)) {
+                for (String child : get(current)) {
+                    traversalStack.push(child);
+                }
+            }
+        }
+        return children;
     }
 }
