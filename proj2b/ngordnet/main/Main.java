@@ -9,8 +9,8 @@ public class Main {
         String wordFile = "./data/ngrams/top_49887_words.csv";
         String countFile = "./data/ngrams/total_counts.csv";
 
-        String synsetFile = "./data/wordnet/synsets.txt";
-        String hyponymFile = "./data/wordnet/hyponyms.txt";
+        String synsetFile = "./data/wordnet/synsets16.txt";
+        String hyponymFile = "./data/wordnet/hyponyms16.txt";
 
 //        NGramMap ngm = new NGramMap(wordFile, countFile);
         WordNet wn = new WordNet(synsetFile, hyponymFile);

@@ -22,11 +22,8 @@ public class WordNet {
             String[] line = synsetFile.readLine().split(",");
             Integer firstSynsetItem = Integer.parseInt(line[0]);
             String[] secondSynsetItem = line[1].split(" ");
-            List<String> stringList = new ArrayList<>();
-            for (String item : secondSynsetItem) {
-                stringList.add(item);
-            }
-            wordIDtoWords.put(firstSynsetItem,stringList);
+            List myList = Arrays.asList(secondSynsetItem);
+            wordIDtoWords.put(firstSynsetItem, myList);
         }
         while (hyponymFile.hasNextLine()) {
             String[] line = hyponymFile.readLine().split(",");
@@ -47,14 +44,12 @@ public class WordNet {
             List<String> words = wordIDtoWords.get(integer);
             if (hypoIDs != null) {
                 for (String word : words) {
-                    for (Integer hypoID : hypoIDs) {
-                        List<String> hypoList = wordIDtoWords.get(hypoID);
-                        for (String hypo : hypoList) {
-                            //String word = map.get(integer);
-                            //String hypo = map.get(hypoID);
-                            graph.setEdge(word, hypo);
-                        }
-                    }
+                  for (Integer hypoID : hypoIDs) {
+                      List<String> hypoList = wordIDtoWords.get(hypoID);
+                      for (String hypo : hypoList) {
+                          graph.setEdge(word, hypo);
+                      }
+                  }
                 }
             }
         }
