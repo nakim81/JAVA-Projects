@@ -16,42 +16,46 @@ public class WordNet {
         graph = new Graph();
         In synsetFile = new In(synsetFileName);
         In hyponymFile = new In(hyponymFileName);
-        Map<Integer, String> map = new HashMap<>();
-        Map<Integer, Set<Integer>> map2 = new HashMap<>();
+        Map<Integer, List<String>> wordIDtoWords = new HashMap<>();
+        Map<Integer, List<Integer>> hypoRelationship = new HashMap<>();
         while (synsetFile.hasNextLine()) {
             String[] line = synsetFile.readLine().split(",");
             Integer firstSynsetItem = Integer.parseInt(line[0]);
-            String secondSynsetItem = line[1];
-            map.put(firstSynsetItem, secondSynsetItem);
+            String[] secondSynsetItem = line[1].split(" ");
+            List<String> stringList = new ArrayList<>();
+            for (String item : secondSynsetItem) {
+                stringList.add(item);
+            }
+            wordIDtoWords.put(firstSynsetItem,stringList);
         }
         while (hyponymFile.hasNextLine()) {
             String[] line = hyponymFile.readLine().split(",");
-            Integer word = Integer.parseInt(line[0]);
-            Set<Integer> hypos;
-            if (map2.containsKey(word)) {
-                hypos = map2.get(word);
+            Integer wordID = Integer.parseInt(line[0]);
+            List<Integer> hypos;
+            if (hypoRelationship.containsKey(wordID)) {
+                hypos = hypoRelationship.get(wordID);
             } else {
-                hypos = new HashSet<>();
+                hypos = new ArrayList<>();
             }
             for (int i = 1; i < line.length; i++) {
                 hypos.add(Integer.parseInt(line[i]));
             }
-            map2.put(word, hypos);
+            hypoRelationship.put(wordID, hypos);
         }
-        for (Integer integer : map.keySet()) {
-            Set<Integer> hypoIDs = map2.get(integer);
-            //String[] words = map.get(integer).split("\t");
+        for (Integer integer : wordIDtoWords.keySet()) {
+            List<Integer> hypoIDs = hypoRelationship.get(integer);
+            List<String> words = wordIDtoWords.get(integer);
             if (hypoIDs != null) {
-                //for (String word : words) {
+                for (String word : words) {
                     for (Integer hypoID : hypoIDs) {
-                        //String[] hypoList = map.get(hypoID).split("\t");
-                        //for (String hypo : hypoList) {
-                            String word = map.get(integer);
-                            String hypo = map.get(hypoID);
+                        List<String> hypoList = wordIDtoWords.get(hypoID);
+                        for (String hypo : hypoList) {
+                            //String word = map.get(integer);
+                            //String hypo = map.get(hypoID);
                             graph.setEdge(word, hypo);
-                        //}
+                        }
                     }
-                //}
+                }
             }
         }
     }
