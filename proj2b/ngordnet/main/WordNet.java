@@ -6,7 +6,6 @@ import edu.princeton.cs.algs4.In;
 
 public class WordNet {
     public Graph graph;
-
     public WordNet(String synsetFileName, String hyponymFileName) {
         /**How do I handle multiple words for one wordID? Using single array or single map didn't work out.
          * My third approach is multiple maps.
@@ -56,6 +55,35 @@ public class WordNet {
     }
 
     public List<String> getHyponyms(String word) {
-        return graph.getChildren(word);
+        return getChildren(word);
+    }
+
+    private void setEdge(String word, String child) {
+        //setting and edge by putting into the corresponding TreeSets
+        if (get(word) == null) {
+            Set<String> set = new TreeSet<>();
+            set.add(child);
+            put(word, set);
+        } else {
+            get(word).add(child);
+        }
+    }
+
+    private List<String> getChildren(String word) {
+        //Tree traversal
+        List<String> children = new ArrayList<>();
+        Stack<String> traversalStack = new Stack<>();
+        traversalStack.push(word);
+        while (!traversalStack.isEmpty()) {
+            String current = traversalStack.pop();
+            children.add(current);
+            Set<String> temp = get(current);
+            if (temp != null) {
+                for (String child : temp) {
+                    traversalStack.push(child);
+                }
+            }
+        }
+        return children;
     }
 }
