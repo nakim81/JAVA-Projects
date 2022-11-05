@@ -2,7 +2,6 @@ package ngordnet.main;
 
 import ngordnet.hugbrowsermagic.NgordnetQuery;
 import ngordnet.hugbrowsermagic.NgordnetQueryHandler;
-import ngordnet.ngrams.NGramMap;
 
 import java.util.*;
 
@@ -18,14 +17,18 @@ public class HyponymsHandler extends NgordnetQueryHandler {
         List<String> words = q.words();
         int startYear = q.startYear();
         int endYear = q.endYear();
-        List<List<String>> lists = new ArrayList<>();
+        List<Set<String>> sets = new ArrayList<>();
         for (int i = 0; i < words.size(); i++) {
             String word = words.get(i);
-            lists.add(i, wn.getHyponyms(word));
+            sets.add(i, wn.getHyponyms(word));
         }
-        List<String> children = lists.get(0);
-        for(int j = 1; j < lists.size(); j++) {
-            children.retainAll(lists.get(j));
+        Set<String> temp = sets.get(0);
+        for(int j = 1; j < sets.size(); j++) {
+            temp.retainAll(sets.get(j));
+        }
+        List<String> children = new ArrayList<>();
+        for (String word : temp) {
+            children.add(word);
         }
         Collections.sort(children);
         String response = "[";
