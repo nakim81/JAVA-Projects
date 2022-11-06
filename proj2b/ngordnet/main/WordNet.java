@@ -6,7 +6,7 @@ import java.util.*;
 import edu.princeton.cs.algs4.In;
 
 public class WordNet {
-    private HashMap<List<String>, List<Integer>> wordsToWordID;
+    private HashMap<Set<String>, Set<Integer>> wordsToWordID;
     private HashMap<Integer, List<Integer>> hypoRelationship;
     private HashMap<Integer, List<String>> wordIDToWords;
 
@@ -26,13 +26,17 @@ public class WordNet {
             String[] line = synsetFile.readLine().split(",");
             Integer firstSynsetItem = Integer.parseInt(line[0]);
             String[] secondSynsetItem = line[1].split(" ");
+            Set<String> stringSet = new HashSet<>();
             List myList = Arrays.asList(secondSynsetItem);
-            if (wordsToWordID.get(myList) == null) {
-                List<Integer> integers = new ArrayList<>();
+            for (String string : secondSynsetItem) {
+                stringSet.add(string);
+            }
+            if (wordsToWordID.get(stringSet) == null) {
+                Set<Integer> integers = new HashSet<>();
                 integers.add(firstSynsetItem);
-                wordsToWordID.put(myList, integers);
+                wordsToWordID.put(stringSet, integers);
             } else {
-                wordsToWordID.get(myList).add(firstSynsetItem);
+                wordsToWordID.get(stringSet).add(firstSynsetItem);
             }
             wordIDToWords.put(firstSynsetItem, myList);
         }
@@ -54,9 +58,9 @@ public class WordNet {
 
     public Set<String> getHyponyms(String word) {
         List<Integer> integerList = new ArrayList<>();
-        for (List<String> list : wordsToWordID.keySet()) {
-            if (list.contains(word)) {
-                List<Integer> temp = wordsToWordID.get(list);
+        for (Set<String> set : wordsToWordID.keySet()) {
+            if (set.contains(word)) {
+                Set<Integer> temp = wordsToWordID.get(set);
                 for (Integer integer : temp) {
                     integerList.add(integer);
                 }
@@ -67,7 +71,7 @@ public class WordNet {
 
     private Set<String> getChildren(List<Integer> stack) {
         //Tree traversal
-        Set<String> children = new TreeSet<>();
+        Set<String> children = new HashSet<>();
         Stack<List<Integer>> traversalStack = new Stack<>();
         traversalStack.push(stack);
         while (!traversalStack.isEmpty()) {
@@ -75,9 +79,7 @@ public class WordNet {
             for (Integer integer : current) {
                 List<String> words = wordIDToWords.get(integer);
                 for (String word : words) {
-                    if (!children.contains(word)) {
-                        children.add(word);
-                    }
+                    children.add(word);
                 }
                 List<Integer> temp = hypoRelationship.get(integer);
                 if (temp == null) {

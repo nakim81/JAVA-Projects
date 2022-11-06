@@ -79,7 +79,7 @@ public class HyponymsHandler extends NgordnetQueryHandler {
                 }
                 String word = wordsList.get(i);
                 response += word;
-                if (i < k - 1) {
+                if (i < wordsList.size() - 1) {
                     response += ", ";
                 }
             }
