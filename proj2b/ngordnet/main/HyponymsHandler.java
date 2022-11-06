@@ -28,7 +28,7 @@ public class HyponymsHandler extends NgordnetQueryHandler {
             sets.add(i, wn.getHyponyms(word));
         }
         Set<String> temp = sets.get(0);
-        for(int j = 1; j < sets.size(); j++) {
+        for (int j = 1; j < sets.size(); j++) {
             temp.retainAll(sets.get(j));
         }
         List<String> children = new ArrayList<>();
