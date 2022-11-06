@@ -9,6 +9,7 @@ public class WordNet {
     private HashMap<Set<String>, Set<Integer>> wordsToWordID;
     private HashMap<Integer, List<Integer>> hypoRelationship;
     private HashMap<Integer, List<String>> wordIDToWords;
+    private HashMap<String, Set<Integer>> wordToWordID;
 
     public WordNet(String synsetFileName, String hyponymFileName) {
         /**How do I handle multiple words for one wordID? Using single array or single map didn't work out.
@@ -22,6 +23,7 @@ public class WordNet {
         wordsToWordID = new HashMap<>();
         hypoRelationship = new HashMap<>();
         wordIDToWords = new HashMap<>();
+        wordToWordID = new HashMap<>();
         while (synsetFile.hasNextLine()) {
             String[] line = synsetFile.readLine().split(",");
             Integer firstSynsetItem = Integer.parseInt(line[0]);
@@ -30,6 +32,13 @@ public class WordNet {
             List myList = Arrays.asList(secondSynsetItem);
             for (String string : secondSynsetItem) {
                 stringSet.add(string);
+                if (wordToWordID.containsKey(string)) {
+                    wordToWordID.get(string).add(firstSynsetItem);
+                } else {
+                    Set<Integer> set = new HashSet<>();
+                    set. add(firstSynsetItem);
+                    wordToWordID.put(string, set);
+                }
             }
             if (wordsToWordID.get(stringSet) == null) {
                 Set<Integer> integers = new HashSet<>();
@@ -47,7 +56,7 @@ public class WordNet {
             if (hypoRelationship.containsKey(wordID)) {
                 hypos = hypoRelationship.get(wordID);
             } else {
-                hypos = new Stack<>();
+                hypos = new ArrayList<>();
             }
             for (int i = 1; i < line.length; i++) {
                 hypos.add(Integer.parseInt(line[i]));
@@ -58,13 +67,9 @@ public class WordNet {
 
     public Set<String> getHyponyms(String word) {
         List<Integer> integerList = new ArrayList<>();
-        for (Set<String> set : wordsToWordID.keySet()) {
-            if (set.contains(word)) {
-                Set<Integer> temp = wordsToWordID.get(set);
-                for (Integer integer : temp) {
-                    integerList.add(integer);
-                }
-            }
+        Set<Integer> temp = wordToWordID.get(word);
+        for (Integer integer : temp) {
+            integerList.add(integer);
         }
         return getChildren(integerList);
     }
