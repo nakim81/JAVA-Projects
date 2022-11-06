@@ -58,7 +58,7 @@ public class WordNet {
 
     private Set<String> getChildren(List<Integer> stack) {
         //Tree traversal
-        Set<String> children = new HashSet<>();
+        Set<String> children = new TreeSet<>();
         Stack<List<Integer>> traversalStack = new Stack<>();
         traversalStack.push(stack);
         while (!traversalStack.isEmpty()) {
@@ -79,28 +79,4 @@ public class WordNet {
         }
         return children;
     }
-//    private Set<String> getChildren(Stack<Integer> stack) {
-//        //Tree traversal
-//        Set<String> children = new HashSet<>();
-//        Stack<Stack<Integer>> traversalStack = new Stack<>();
-//        traversalStack.push(stack);
-//        while (!traversalStack.isEmpty()) {
-//            Stack<Integer> current = traversalStack.pop();
-//            while (!current.isEmpty()) {
-//                Integer integer = current.pop();
-//                List<String> words = wordIDToWords.get(integer);
-//                for (String word : words) {
-//                    if (!children.contains(word)) {
-//                        children.add(word);
-//                    }
-//                }
-//                List<Integer> temp = hypoRelationship.get(integer);
-//                if (temp == null) {
-//                } else {
-//                    traversalStack.push(temp);
-//                }
-//            }
-//        }
-//        return children;
-//    }
 }
