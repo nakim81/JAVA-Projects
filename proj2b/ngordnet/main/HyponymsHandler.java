@@ -62,6 +62,9 @@ public class HyponymsHandler extends NgordnetQueryHandler {
             Collections.sort(counts, Collections.reverseOrder());
             List<String> wordsList = new ArrayList<>();
             for (int i = 0; i < k; i++) {
+                if (counts.get(i) == null) {
+                    break;
+                }
                 Double count = counts.get(i);
                 wordsList.add(countsToWords.get(count));
             }
