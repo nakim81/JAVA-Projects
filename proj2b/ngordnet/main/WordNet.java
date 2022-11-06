@@ -6,7 +6,7 @@ import java.util.*;
 import edu.princeton.cs.algs4.In;
 
 public class WordNet {
-    private HashMap<List<String>, Integer> wordsToWordID;
+    private HashMap<List<String>, List<Integer>> wordsToWordID;
     private HashMap<Integer, List<Integer>> hypoRelationship;
     private HashMap<Integer, List<String>> wordIDToWords;
 
@@ -27,7 +27,13 @@ public class WordNet {
             Integer firstSynsetItem = Integer.parseInt(line[0]);
             String[] secondSynsetItem = line[1].split(" ");
             List myList = Arrays.asList(secondSynsetItem);
-            wordsToWordID.put(myList, firstSynsetItem);
+            if (wordsToWordID.get(myList) == null) {
+                List<Integer> integers = new ArrayList<>();
+                integers.add(firstSynsetItem);
+                wordsToWordID.put(myList, integers);
+            } else {
+                wordsToWordID.get(myList).add(firstSynsetItem);
+            }
             wordIDToWords.put(firstSynsetItem, myList);
         }
         while (hyponymFile.hasNextLine()) {
@@ -50,7 +56,10 @@ public class WordNet {
         List<Integer> integerList = new ArrayList<>();
         for (List<String> list : wordsToWordID.keySet()) {
             if (list.contains(word)) {
-                integerList.add((wordsToWordID.get(list)));
+                List<Integer> temp = wordsToWordID.get(list);
+                for (Integer integer : temp) {
+                    integerList.add(integer);
+                }
             }
         }
         return getChildren(integerList);
