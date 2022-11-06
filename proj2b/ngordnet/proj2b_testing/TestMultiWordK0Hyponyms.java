@@ -9,7 +9,9 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
-/** Tests the case where the list of words is length greater than 1, but k is still zero. */
+/**
+ * Tests the case where the list of words is length greater than 1, but k is still zero.
+ */
 public class TestMultiWordK0Hyponyms {
     // this case doesn't use the NGrams dataset at all, so the choice of files is irrelevant
     public static final String WORDS_FILE = "data/ngrams/very_short.csv";
@@ -19,7 +21,9 @@ public class TestMultiWordK0Hyponyms {
     public static final String LARGE_SYNSET_FILE = "data/wordnet/synsets.txt";
     public static final String LARGE_HYPONYM_FILE = "data/wordnet/hyponyms.txt";
 
-    /** This is an example from the spec.*/
+    /**
+     * This is an example from the spec.
+     */
     @Test
     public void testOccurrenceAndChangeK0() {
         NgordnetQueryHandler studentHandler = AutograderBuddy.getHyponymHandler(
@@ -32,7 +36,9 @@ public class TestMultiWordK0Hyponyms {
         assertEquals(expected, actual);
     }
 
-    /** This is an example from the spec on the full hyponyms and synsets file.*/
+    /**
+     * This is an example from the spec on the full hyponyms and synsets file.
+     */
     @Test
     public void testBowlGalleryK0() {
         NgordnetQueryHandler studentHandler = AutograderBuddy.getHyponymHandler(
@@ -45,7 +51,9 @@ public class TestMultiWordK0Hyponyms {
         assertEquals(expected, actual);
     }
 
-    /** This is another example from the spec where the user enters female, animal. */
+    /**
+     * This is another example from the spec where the user enters female, animal.
+     */
     @Test
     public void testFemaleAnimalK0() {
         NgordnetQueryHandler studentHandler = AutograderBuddy.getHyponymHandler(
@@ -58,7 +66,9 @@ public class TestMultiWordK0Hyponyms {
         assertEquals(expected, actual);
     }
 
-    /** This is another example from the spec where the user enters female, leader. */
+    /**
+     * This is another example from the spec where the user enters female, leader.
+     */
     @Test
     public void testFemaleLeaderK0() {
         System.out.println("NOTE: For the female, leader test, you have to fill in the expected text AND List<String> words yourself, otherwise this test will likely crash due to a null pointer exception");
