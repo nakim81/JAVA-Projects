@@ -67,9 +67,11 @@ public class WordNet {
 
     public Set<String> getHyponyms(String word) {
         List<Integer> integerList = new ArrayList<>();
-        Set<Integer> temp = wordToWordID.get(word);
-        for (Integer integer : temp) {
-            integerList.add(integer);
+        if (wordToWordID.containsKey(word)) {
+            Set<Integer> temp = wordToWordID.get(word);
+            for (Integer integer : temp) {
+                integerList.add(integer);
+            }
         }
         return getChildren(integerList);
     }
