@@ -30,7 +30,6 @@ public class Engine {
      * In other words, running both of these:
      *   - interactWithInputString("n123sss:q")
      *   - interactWithInputString("lww")
-     *   
      *
      * should yield the exact same world state as:
      *   - interactWithInputString("n123sssww")
