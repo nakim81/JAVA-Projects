@@ -34,7 +34,7 @@ public class Engine {
      * should yield the exact same world state as:
      *   - interactWithInputString("n123sssww")
      *
-     * @param input the input string to feed to your program
+     * @param input the input string to feed to your program              
      * @return the 2D TETile[][] representing the state of the world
      */
     public TETile[][] interactWithInputString(String input) {
