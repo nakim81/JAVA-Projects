@@ -70,12 +70,6 @@ public class Engine {
         // that works for many different input types.
         Random rand = new Random();
         TERenderer ter = new TERenderer();
-        TETile[][] finalWorldFrame = new TETile[WIDTH][HEIGHT];
-        for (int x = 0; x < WIDTH; x += 1) {
-            for (int y = 0; y < HEIGHT; y += 1) {
-                finalWorldFrame[x][y] = Tileset.NOTHING;
-            }
-        }
         int numRooms = 5;
         // initialize tiles
         TETile[][] world = new TETile[WIDTH][HEIGHT];
@@ -103,9 +97,9 @@ public class Engine {
             }
             i += 1;
         }
+
         ter.renderFrame(world);
 
-
-        return finalWorldFrame;
+        return world;
     }
 }
