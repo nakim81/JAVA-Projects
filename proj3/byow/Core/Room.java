@@ -34,7 +34,4 @@ public class Room {
     Position getCenter(Room room) {
         return center;
     }
-    Position getCenter2(Room room) {
-        return center;
-    }
 }
