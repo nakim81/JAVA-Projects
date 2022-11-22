@@ -68,13 +68,42 @@ public class Engine {
         //
         // See proj3.byow.InputDemo for a demo of how you can make a nice clean interface
         // that works for many different input types.
-
+        Random rand = new Random();
+        TERenderer ter = new TERenderer();
         TETile[][] finalWorldFrame = new TETile[WIDTH][HEIGHT];
         for (int x = 0; x < WIDTH; x += 1) {
             for (int y = 0; y < HEIGHT; y += 1) {
                 finalWorldFrame[x][y] = Tileset.NOTHING;
             }
         }
+        int numRooms = 5;
+        // initialize tiles
+        TETile[][] world = new TETile[WIDTH][HEIGHT];
+        for (int x = 0; x < WIDTH; x += 1) {
+            for (int y = 0; y < HEIGHT; y += 1) {
+                world[x][y] = Tileset.NOTHING;
+            }
+        }
+
+        int i = 0;
+        while (i < numRooms) {
+            int width = 6 + rand.nextInt(4);
+            int height = 6 + rand.nextInt(4);
+            int starting_width = rand.nextInt(WIDTH - width - 1);
+            int starting_height = rand.nextInt(HEIGHT - height - 1);
+            for (int x = starting_width; x < starting_width + width; x += 1) {
+                for (int y = starting_height; y < starting_height + height; y += 1) {
+                    world[x][y] = Tileset.WALL;
+                }
+            }
+            for (int x = starting_width + 1; x < starting_width + width - 1; x += 1) {
+                for (int y = starting_height + 1; y < starting_height + height - 1; y += 1) {
+                    world[x][y] = Tileset.FLOOR;
+                }
+            }
+            i += 1;
+        }
+        ter.renderFrame(world);
 
 
         return finalWorldFrame;
