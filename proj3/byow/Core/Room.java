@@ -15,23 +15,31 @@ public class Room {
         center = new Position(pos.x + (width / 2), pos.y + (height / 2));
     }
 
-    Position getBottomLeftCorner(Room room) {
+    public Position getBottomLeftCorner(Room room) {
         return bottomLeftCorner;
     }
 
-    Position getBottomRightCorner(Room room) {
+    public Position getBottomRightCorner(Room room) {
         return bottomRightCorner;
     }
 
-    Position getTopLeftCorner(Room room) {
+    public Position getTopLeftCorner(Room room) {
         return topLeftCorner;
     }
 
-    Position getTopRightCorner(Room room) {
+    public Position getTopRightCorner(Room room) {
         return topRightCorner;
     }
 
-    Position getCenter(Room room) {
+    public Position getCenter(Room room) {
         return center;
+    }
+
+    public int getWidth(Room room) {
+        return getBottomLeftCorner(room).x - getBottomRightCorner(room).x;
+    }
+
+    public int getHeight(Room room) {
+        return getBottomLeftCorner(room).y - getTopLeftCorner(room).y;
     }
 }

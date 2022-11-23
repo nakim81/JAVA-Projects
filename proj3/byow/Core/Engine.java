@@ -19,16 +19,9 @@ public class Engine {
      * including inputs from the main menu.
      */
     public void interactWithKeyboard() {
-//        StdDraw.clear(Color.BLACK);
-//        StdDraw.setPenColor(Color.WHITE);
-//        Font fontBig = new Font("Monaco", Font.BOLD, 30);
-//        StdDraw.setFont(fontBig);
-//
-//        StdDraw.text(this.WIDTH / 2, this.HEIGHT * 0.96, "CS61B: THE GAME");
-//        StdDraw.text(this.WIDTH / 2, this.HEIGHT/2 + 5, "New Game (N)");
-//        StdDraw.text(this.WIDTH / 2, this.HEIGHT/2, "Load Game (L)");
-//        StdDraw.text(this.WIDTH / 2, this.HEIGHT/2 - 5, "Quit (Q)");
-//        StdDraw.show();
+// 키가 눌릴 때 까지 drawscreen 하는걸로 바꿔야 함
+        Startscreen();
+
 //        String input = Character.toString(StdDraw.nextKeyTyped());
 //        if (input.equals("N")) {
 //            newGame(input);
@@ -68,38 +61,47 @@ public class Engine {
         //
         // See proj3.byow.InputDemo for a demo of how you can make a nice clean interface
         // that works for many different input types.
-        Random rand = new Random();
-        TERenderer ter = new TERenderer();
-        int numRooms = 5;
-        // initialize tiles
-        TETile[][] world = new TETile[WIDTH][HEIGHT];
+        TETile[][] finalWorldFrame = new TETile[WIDTH][HEIGHT];
         for (int x = 0; x < WIDTH; x += 1) {
             for (int y = 0; y < HEIGHT; y += 1) {
-                world[x][y] = Tileset.NOTHING;
+                finalWorldFrame[x][y] = Tileset.NOTHING;
             }
         }
 
-        int i = 0;
-        while (i < numRooms) {
-            int width = 6 + rand.nextInt(4);
-            int height = 6 + rand.nextInt(4);
-            int starting_width = rand.nextInt(WIDTH - width - 1);
-            int starting_height = rand.nextInt(HEIGHT - height - 1);
-            for (int x = starting_width; x < starting_width + width; x += 1) {
-                for (int y = starting_height; y < starting_height + height; y += 1) {
-                    world[x][y] = Tileset.WALL;
-                }
+
+        return finalWorldFrame;
+    }
+
+    public void Startscreen() {
+        StdDraw.clear(Color.BLACK);
+        StdDraw.setPenColor(Color.WHITE);
+        Font fontBig = new Font("Monaco", Font.BOLD, 30);
+        StdDraw.setFont(fontBig);
+
+        StdDraw.text(this.WIDTH / 2, this.HEIGHT * 0.96, "CS61B: THE GAME");
+        StdDraw.text(this.WIDTH / 2, this.HEIGHT/2 + 5, "New Game (N)");
+        StdDraw.text(this.WIDTH / 2, this.HEIGHT/2, "Load Game (L)");
+        StdDraw.text(this.WIDTH / 2, this.HEIGHT/2 - 5, "Quit (Q)");
+        StdDraw.show();
+    }
+
+    public void Seedscreen() {
+        String input = "";
+        Character lastcharacter = null;
+        while (lastcharacter != 's' || lastcharacter != 'S'){
+            StdDraw.clear(Color.BLACK);
+            StdDraw.setPenColor(Color.WHITE);
+            Font fontBig = new Font("Monaco", Font.BOLD, 30);
+            StdDraw.setFont(fontBig);
+
+            StdDraw.text(this.WIDTH / 2, this.HEIGHT / 2 + 5, "ENTER SEED, THEN S TO START!");
+            StdDraw.text(this.WIDTH / 2, this.HEIGHT / 2, "SEED: " + input);
+            StdDraw.show();
+            if (StdDraw.hasNextKeyTyped()) {
+                lastcharacter = StdDraw.nextKeyTyped();
+                input += lastcharacter;
             }
-            for (int x = starting_width + 1; x < starting_width + width - 1; x += 1) {
-                for (int y = starting_height + 1; y < starting_height + height - 1; y += 1) {
-                    world[x][y] = Tileset.FLOOR;
-                }
-            }
-            i += 1;
         }
-
-        ter.renderFrame(world);
-
-        return world;
+        // return S를 쳤을 때 화면이 넘어가면서 숫자만 SEED로 받게
     }
 }
