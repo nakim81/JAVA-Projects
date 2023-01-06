@@ -12,12 +12,7 @@ public class WordNet {
     private HashMap<String, Set<Integer>> wordToWordID;
 
     public WordNet(String synsetFileName, String hyponymFileName) {
-        /**How do I handle multiple words for one wordID? Using single array or single map didn't work out.
-         * My third approach is multiple maps.
-         * Possible approaches that I am considering now: one map for wordID and word, one map for hyponyms, and try to
-         * build graph by combining data in two maps.
-         */
-//        graph = new Graph();
+        
         In synsetFile = new In(synsetFileName);
         In hyponymFile = new In(hyponymFileName);
         wordsToWordID = new HashMap<>();
